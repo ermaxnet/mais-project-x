@@ -1,0 +1,87 @@
+{
+  "name": "chat-modules",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Max Eremin",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.1",
+    "moment": "^2.22.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "sequelize": "^4.37.6",
+    "serve-static": "^1.13.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
+    "@babel/preset-react": "^7.0.0-beta.46",
+    "babel-loader": "^8.0.0-beta.2",
+    "del": "^3.0.0",
+    "fancy-log": "^1.3.2",
+    "git-rev-sync": "^1.11.1",
+    "gulp": "^3.9.1",
+    "gulp-cached": "^1.1.1",
+    "gulp-compass": "^2.1.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-header": "^2.0.5",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-newer": "^1.4.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-print": "^5.0.0",
+    "gulp-size": "^3.0.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-svgmin": "^1.2.4",
+    "gulp-uglify": "^3.0.0",
+    "run-sequence": "^2.2.1",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.15",
+    "webpack-stream": "^4.0.3"
+  },
+  "paths": {
+    "assets": "./wwwroot/public/",
+    "src": {
+      "scss": "./wwwroot/assets/scss/",
+      "images": "./wwwroot/assets/images/",
+      "js": "./wwwroot/client/source/"
+    },
+    "build": {
+      "css": "./wwwroot/assets/css/",
+      "js": "./wwwroot/client/bundles/"
+    },
+    "dist": {
+      "css": "assets/css/",
+      "images": "assets/images/",
+      "fonts": "assets/fonts/",
+      "js": "scripts/"
+    }
+  },
+  "vars": {
+    "scss": "*.scss",
+    "compass": "./config.rb"
+  },
+  "globs": {
+    "distCss": [
+      "./wwwroot/assets/css/*.css"
+    ],
+    "distFonts": [
+      "./wwwroot/assets/fonts/**/*.{eot,ttf,woff,woff2,svg}"
+    ],
+    "distLibs": [],
+    "distJs": [
+      "./wwwroot/client/bundles/*.js"
+    ]
+  }
+}
