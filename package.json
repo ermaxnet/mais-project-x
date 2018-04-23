@@ -1,11 +1,15 @@
 {
-  "name": "chat-modules",
+  "name": "mais",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {},
   "author": "Max Eremin",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ermaxnet/mais-project-x.git"
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
