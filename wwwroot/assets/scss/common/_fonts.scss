@@ -1,0 +1,80 @@
+@import "compass/css3/font-face";
+
+@include font-face(
+    "Alegreya Sans",
+    font-files(
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-100.woff",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-100.woff2",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-100.ttf",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-100.svg"
+    ),
+    "Alegreya/alegreya-sans-v8-cyrillic_latin-100.eot",
+    100,
+    normal
+);
+
+@include font-face(
+    "Alegreya Sans",
+    font-files(
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-300.woff",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-300.woff2",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-300.ttf",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-300.svg"
+    ),
+    "Alegreya/alegreya-sans-v8-cyrillic_latin-300.eot",
+    300,
+    normal
+);
+
+
+@include font-face(
+    "Alegreya Sans",
+    font-files(
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-regular.woff",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-regular.woff2",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-regular.ttf",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-regular.svg"
+    ),
+    "Alegreya/alegreya-sans-v8-cyrillic_latin-regular.eot",
+    400,
+    normal
+);
+
+@include font-face(
+    "Alegreya Sans",
+    font-files(
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-500.woff",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-500.woff2",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-500.ttf",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-500.svg"
+    ),
+    "Alegreya/alegreya-sans-v8-cyrillic_latin-500.eot",
+    500,
+    normal
+);
+
+@include font-face(
+    "Alegreya Sans",
+    font-files(
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-700.woff",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-700.woff2",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-700.ttf",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-700.svg"
+    ),
+    "Alegreya/alegreya-sans-v8-cyrillic_latin-700.eot",
+    700,
+    normal
+);
+
+@include font-face(
+    "Alegreya Sans",
+    font-files(
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-900.woff",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-900.woff2",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-900.ttf",
+        "Alegreya/alegreya-sans-v8-cyrillic_latin-900.svg"
+    ),
+    "Alegreya/alegreya-sans-v8-cyrillic_latin-900.eot",
+    900,
+    normal
+);

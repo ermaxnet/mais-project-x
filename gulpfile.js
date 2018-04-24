@@ -38,7 +38,7 @@ const banner =
 `; //${gitRevSync.short()} [${gitRevSync.branch()}]
 
 const env = {
-    WEBPACK_PROD_MODE: true
+    WEBPACK_PROD_MODE: false
 };
 
 gulp.task("clean", () => {

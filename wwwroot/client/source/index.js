@@ -1,29 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
-const reg = e => {
-    e.preventDefault();
-    fetch("http://localhost:8002/user", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
-        },
-        body: "username=happyfrog&hash=darius&first_name=Максим&last_name=Ерёмин",
-        mode: "cors"
-    })
-    .then(response => response.json())
-    .then(response => {
-        console.log(response);
-    });
-};
+import { 
+    BrowserRouter as Router,
+    Route,
+    Switch 
+} from "react-router-dom";
+import WelcomePage from "./pages/welcome";
+import CabinetPage from "./pages/cabinet";
+import registerServiceWorker from "./registerServiceWorker";
 
 ReactDOM.render(
-    <div>
-        <ul>
-            <li key="reg">
-                <button onClick={reg}>Register</button>
-            </li>
-        </ul>
-    </div>,
+    <Router>
+        <div className="wrapper">
+            <Switch>
+                <Route exact path="/" component={WelcomePage} />
+                <Route exact path="/cabinet" component={CabinetPage} />
+            </Switch>
+        </div>
+    </Router>,
     document.getElementById("root")
 );
+
+registerServiceWorker();
