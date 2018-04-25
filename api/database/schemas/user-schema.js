@@ -17,6 +17,7 @@ const User = (sequelize, DataTypes) =>
         hash: { type: DataTypes.STRING, allowNull: true },
         first_name: { type: DataTypes.STRING, allowNull: false },
         last_name: { type: DataTypes.STRING, allowNull: false },
+        middle_name: { type: DataTypes.STRING, allowNull: true },
         email: { type: DataTypes.STRING, allowNull: true },
         status_pzk: { type: DataTypes.INTEGER, allowNull: true },
         status_mais: { type: DataTypes.INTEGER, allowNull: true }

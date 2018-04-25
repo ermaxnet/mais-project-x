@@ -12,7 +12,9 @@ const Settings = (sequelize, DataTypes) =>
         imagesDir: { type: DataTypes.STRING, allowNull: true },
         avatar: { type: DataTypes.STRING, allowNull: true },
         category: { type: DataTypes.STRING, allowNull: true },
-        displayName: { type: DataTypes.STRING, allowNull: true }
+        businessCategory: { type: DataTypes.STRING, allowNull: true },
+        displayName: { type: DataTypes.STRING, allowNull: true },
+        tabNumber: { type: DataTypes.INTEGER, allowNull: true, unique: true }
     }, {
         timestamps: false
     });

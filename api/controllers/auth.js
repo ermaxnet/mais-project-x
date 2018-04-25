@@ -44,13 +44,37 @@ module.exports = router => {
         })(req, res);
     });
 
-    router.put("/user", (req, res) => {
+    router.post("/token/pzk", (req, res) => {
+        passport.authenticate("pzk", { session: false }, (err, user, info) => {
+            if(err) {
+                return res.status(400).json({
+                    success: false,
+                    error: info ? info.message : err.message
+                });
+            }
+            req.login(user, { session: false }, err => {
+                if(err) {
+                    res.status(400).json({
+                        success: false,
+                        error: err.message
+                    });
+                } 
+                const token = releaseToken(user);
+                return res.json({ success: true, token });
+            });
+        })(req, res);
+    });
+
+    router.put("/create", (req, res) => {
         let user = new User(req.body);
         UserAPI.create(user)
             .then(user => {
                 const token = releaseToken(user);
                 res.status(200).json({ success: true, token });
-            });
+            })
+            .catch(
+                err => res.status(400).json({ success: false, error: err.message })
+            );
     });
 
     return router;

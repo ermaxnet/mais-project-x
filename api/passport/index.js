@@ -1,6 +1,7 @@
 const       passport = require("passport"),
        LocalStrategy = require("passport-local").Strategy,
          JwtStrategy = require("passport-jwt").Strategy,
+    PzkTokenStrategy = require("./pzk-strategy"),
             settings = require("../settings.json").jwt;
 
 const { UserAPI } = require("../models/user");
@@ -61,5 +62,7 @@ passport.use(new JwtStrategy(
             .catch(err => done(err));
     }
 ));
+
+passport.use(new PzkTokenStrategy());
 
 module.exports = passport;

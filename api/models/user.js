@@ -60,7 +60,7 @@ UserSchema.hook("beforeCreate", user => {
     }
 });
 
-const create = (user) => {
+const create = user => {
     checkType(user);
     const build = UserSchema.build({
         username: user.nick,

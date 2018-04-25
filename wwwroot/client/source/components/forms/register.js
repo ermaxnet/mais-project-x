@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
     WELCOME_PAGE_STATE
 } from "../../../../../constants";
@@ -18,42 +19,99 @@ const RegisterForm = props => {
                 <div className="form__group">
                     <div className="form__control">
                         <label htmlFor="nick" className="form__label">Имя пользователя</label>
-                        <input type="text" name="nick" id="nick" placeholder="Логин" className="form__input" />
+                        <input 
+                            type="text" 
+                            name="nick" 
+                            id="nick" 
+                            placeholder="Логин" 
+                            className="form__input"
+                            value={props.nick} 
+                            onChange={props.onInput}
+                        />
                     </div>
                 </div>
                 <div className="form__group">
                     <div className="form__control form__control_50">
                         <label htmlFor="password" className="form__label">Пароль</label>
-                        <input type="password" name="password" id="password" placeholder="Пароль" className="form__input" />
+                        <input 
+                            type="password" 
+                            name="password" 
+                            id="password" 
+                            placeholder="Пароль" 
+                            className="form__input" 
+                            value={props.password} 
+                            onChange={props.onInput}
+                        />
                     </div>
                     <div className="form__control form__control_50">
-                        <label htmlFor="repeatPassword" className="form__label">Повторите пароль</label>
-                        <input type="repeatPassword" name="repeatPassword" id="repeatPassword" placeholder="Пароль" className="form__input" />
+                        <label htmlFor="password2" className="form__label">Повторите пароль</label>
+                        <input 
+                            type="password2" 
+                            name="password2" 
+                            id="password2" 
+                            placeholder="Пароль" 
+                            className="form__input"
+                            value={props.password2} 
+                            onChange={props.onInput} 
+                        />
                     </div>
                 </div>
                 <div className="form__group">
                     <div className="form__control form__control_50">
                         <label htmlFor="firstName" className="form__label">Имя</label>
-                        <input type="text" name="firstName" id="firstName" placeholder="Имя" className="form__input" />
+                        <input 
+                            type="text" 
+                            name="firstName" 
+                            id="firstName" 
+                            placeholder="Имя" 
+                            className="form__input" 
+                            value={props.firstName} 
+                            onChange={props.onInput} 
+                        />
                     </div>
                     <div className="form__control form__control_50">
                         <label htmlFor="secondName" className="form__label">Фамилия</label>
-                        <input type="text" name="secondName" id="secondName" placeholder="Фамилия" className="form__input" />
+                        <input 
+                            type="text" 
+                            name="secondName" 
+                            id="secondName" 
+                            placeholder="Фамилия" 
+                            className="form__input"
+                            value={props.secondName} 
+                            onChange={props.onInput}  
+                        />
                     </div>
                 </div>
                 <div className="form__group">
                     <div className="form__control">
                         <label htmlFor="email" className="form__label">Адрес электронной почты</label>
-                        <input type="email" name="email" id="email" placeholder="E-mail" className="form__input" />
+                        <input 
+                            type="email" 
+                            name="email" 
+                            id="email" 
+                            placeholder="E-mail" 
+                            className="form__input" 
+                            value={props.email} 
+                            onChange={props.onInput}  
+                        />
                     </div>
                 </div>
                 <div className="form__actions">
-                    <button className="form__action btn btn-primary">Продолжить</button>
+                    <button className="form__action btn btn-primary" onClick={props.onRegister}>Продолжить</button>
                     <a href="#" className="form__action btn-link" onClick={e => props.changeView(e, WELCOME_PAGE_STATE.LOGIN)}>Вернуться</a>
                 </div>
             </form>
         </div>
     );
+};
+
+RegisterForm.propTypes = {
+    nick: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    password2: PropTypes.string.isRequired,
+    firstName: PropTypes.string.isRequired,
+    secondName: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
 };
 
 export default RegisterForm;

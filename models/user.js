@@ -8,7 +8,8 @@ class User {
         username, 
         hash,
         first_name, 
-        last_name, 
+        last_name,
+        middle_name, 
         email, 
         status_pzk, 
         status_mais, 
@@ -21,6 +22,7 @@ class User {
         this.hash = hash;
         this.firstName = first_name;
         this.lastName = last_name;
+        this.middleName = middle_name;
         this.email = email;
         this.statusPzkCode = status_pzk;
         this.statusMaisCode = status_mais;

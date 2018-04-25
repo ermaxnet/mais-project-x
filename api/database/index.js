@@ -5,9 +5,9 @@ const sequelize = require("./sequelize"),
       MaisToken = require("./schemas/mais-tokens-schema")(sequelize, DataTypes),
        PzkToken = require("./schemas/pzk-tokens-schema")(sequelize, DataTypes);
 
-User.belongsTo(Settings, { foreignKey: "id", targetKey: "id", as: "Settings" });
-User.belongsTo(MaisToken, { foreignKey: "id", targetKey: "id", as: "MaisToken" });
-User.belongsTo(PzkToken, { foreignKey: "id", targetKey: "id", as: "PzkToken" });
+User.hasOne(Settings, { foreignKey: "id", as: "Settings" });
+User.hasOne(MaisToken, { foreignKey: "id", as: "MaisToken" });
+User.hasOne(PzkToken, { foreignKey: "id", as: "PzkToken" });
 
 module.exports = {
     sequelize,

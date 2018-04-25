@@ -22,7 +22,7 @@ app.use(cors({
     origin: "http://localhost:3000",
     credentials: true
 }));
-app.use("/", require("./controllers/auth")(express.Router()))
+app.use("/auth", require("./controllers/auth")(express.Router()))
 app.use("/user", passport.authenticate("jwt", { session: false }), require("./controllers/user")(express.Router()));
 app.use((req, res, next) => {
     res.status(404).json({ success: false, error: "Not Supported Request" });
