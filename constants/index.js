@@ -27,6 +27,11 @@ const MaisAPI = {
 
 const SOCKET = API + "mais";
 
+const REDUX_ACTIONS = {
+    ["CABINET.USER-ADD"]: "CABINET.USER-ADD"
+
+};
+
 module.exports = {
     STATUSES,
     STATUSES_COD,
@@ -34,5 +39,6 @@ module.exports = {
     API,
     MaisAPI,
     COOKIE,
-    SOCKET
+    SOCKET,
+    REDUX_ACTIONS
 };

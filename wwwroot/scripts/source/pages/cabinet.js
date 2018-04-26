@@ -3,7 +3,11 @@ import Cookie from "js-cookie";
 import {
     COOKIE
 } from "../../../../constants";
-import { connect } from "../socket";
+import { connect as socketConnect } from "../socket";
+import { connect } from "react-redux";
+import {
+    updateUser
+} from "../models/cabinet";
 
 class CabinetPage extends Component {
     constructor(props) {
@@ -13,10 +17,11 @@ class CabinetPage extends Component {
         };
     }
     componentWillMount() {
-        connect(() => {
+        socketConnect(() => {
             this.setState({
                 isConnected: true
             });
+            updateUser({ id: 2 });
         });
     }
     onExit(e) {
@@ -25,9 +30,10 @@ class CabinetPage extends Component {
         window.location.href = "/";
     }
     render() {
+        console.log(this.props.user);
         let cabinet = <span>Loading...</span>;
         if(this.state.isConnected) {
-            cabinet = <span>Connected!</span>
+            cabinet = <span>Connected!</span>;
         }
         return (
             <div>
@@ -38,4 +44,9 @@ class CabinetPage extends Component {
     }
 }
 
-export default CabinetPage;
+const mapStateToProps = state => {
+    return {
+        user: state.cabinet.get("user")
+    }
+};
+export default connect(mapStateToProps)(CabinetPage);

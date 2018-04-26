@@ -5,9 +5,13 @@ const {
     PzkTokenSchema
 } = require("../database");
 const               User = require("../../models/user"),
+                   Token = require("../../models/token"),
                       Op = require("sequelize").Op,
                   bcrypt = require("bcrypt-nodejs"),
         SALT_WORK_FACTOR = require("../settings.json").encrypt.salt_work_factor;
+const {
+    STATUSES_COD
+} = require("../../constants");
 
 const checkType = user => {
     if(user instanceof User) { return; }
@@ -133,6 +137,47 @@ const byToken = token =>
     })
     .then(userDTO => 
         userDTO ? new User(userDTO) : null);
+
+const update = (userId, user) => {
+    return UserSchema.findById(userId)
+        .then(userDTO => {
+            return userDTO.update({ 
+                first_name: user.firstName,
+                last_name: user.lastName,
+                middle_name: user.middleName,
+                email: user.email,
+                status: user.statusCode
+            }).then(userDTO => new User(userDTO));
+        });
+};
+
+const updatePZKToken = (userId, token) => {
+    return PzkTokenSchema.findById(userId)
+        .then(pzkTokenDTO => {
+            return pzkTokenDTO.update({ token })
+                .then(pzkTokenDTO => new Token(pzkTokenDTO));
+        });
+};
+
+const updateMAISToken = (userId, token) => {
+    return MaisTokenSchema.findById(userId)
+        .then(maisTokenDTO => {
+            return maisTokenDTO.update({ token })
+                .then(maisTokenDTO => new Token(maisTokenDTO));
+        });
+};
+
+const connect = (userId, token = null) => {
+    const tasks = [
+        update(userId, { statusCode: STATUSES_COD["connected"] })
+    ];
+    if(token) {
+        tasks.push(
+            updateMAISToken(userId, token)
+        );
+    }
+    return Promise.all(tasks);
+};
     
 module.exports = {
     User,
@@ -143,6 +188,10 @@ module.exports = {
             byId,
             where,
             byToken
-        }
+        },
+        update,
+        updatePZKToken,
+        updateMAISToken,
+        connect
     }
 };

@@ -5,9 +5,16 @@ const         sio = require("socket.io"),
    socketPassport = require("./passport/jwt-socket-passport"),
            cookie = require("cookie");
 
+const { UserAPI } = require("./models/user");
+
 const connect = io => {
     io.of("/mais").on("connection", socket => {
-        //console.log(socket.request.user);
+        const user = socket.request.user;
+        UserAPI.connect(user.id, socket.id)
+            .then(([ , token ]), () => {
+                console.log(token);
+            });
+
     });
 };
 
