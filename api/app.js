@@ -4,7 +4,8 @@ const            http = require("http"),
          cookieParser = require("cookie-parser"),
                  cors = require("cors"),
         { sequelize } = require("./database"),
-             passport = require("./passport");
+             passport = require("./passport"),
+         attachSocket = require("./socket");
 const {
     User,
     UserAPI
@@ -19,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "http://127.0.0.3",
     credentials: true
 }));
 app.use("/auth", require("./controllers/auth")(express.Router()))
@@ -35,7 +36,8 @@ sequelize
     .authenticate()
     .then(() => sequelize.sync())
     .then(() => {
-        http.createServer(app).listen(app.get("port"), () => {
+        const server = http.createServer(app);
+        attachSocket(server).listen(app.get("port"), () => {
             console.log(`Serving: localhost ${app.get("port")}`);
         });
     })

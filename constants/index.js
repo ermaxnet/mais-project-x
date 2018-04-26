@@ -1,7 +1,13 @@
 const STATUSES = {
     [1]: "connected",
     [0]: "disconnected",
-    [undefined]: "unknown"
+    [-100]: "unknown"
+};
+
+const STATUSES_COD = {
+    ["connected"]: 1,
+    ["disconnected"]: 0,
+    ["unknown"]: -100
 };
 
 const WELCOME_PAGE_STATE = {
@@ -19,10 +25,14 @@ const MaisAPI = {
     ["USER"]: `${API}user`
 };
 
+const SOCKET = API + "mais";
+
 module.exports = {
     STATUSES,
+    STATUSES_COD,
     WELCOME_PAGE_STATE,
     API,
     MaisAPI,
-    COOKIE
+    COOKIE,
+    SOCKET
 };

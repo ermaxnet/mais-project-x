@@ -8,9 +8,6 @@ const {
     User,
     UserAPI
 } = require("../models/user");
-const {
-    STATUSES
-} = require("../../constants");
 
 class PzkTokenStrategy extends Strategy {
     constructor() {
@@ -51,7 +48,7 @@ class PzkTokenStrategy extends Strategy {
                     const [
                         secondName,
                         firstName,
-                        middleName
+                        middleName = null
                     ] = apiResponse.fullName.split(" ");
                     const user = new User({
                         id: 0,
@@ -60,11 +57,12 @@ class PzkTokenStrategy extends Strategy {
                         last_name: secondName,
                         middle_name: middleName,
                         email: apiResponse.email,
-                        status_pzk: 1,
+                        status_pzk: true,
                         Settings: {
                             avatar: apiResponse.avatar,
                             category: apiResponse.category,
-                            businessCategory: apiResponse.businessCategory
+                            businessCategory: apiResponse.businessCategory,
+                            tabNumber: apiResponse.inputId
                         },
                         PzkToken: {
                             token: apiResponse.token

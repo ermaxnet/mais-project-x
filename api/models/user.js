@@ -67,9 +67,10 @@ const create = user => {
         hash: user.hash,
         first_name: user.firstName,
         last_name: user.lastName,
+        middle_name: user.middleName,
         email: user.email,
-        status_pzk: user.statusPzkCode,
-        status_mais: user.statusMaisCode
+        status_pzk: user.statusPzk,
+        status_mais: user.statusMais
     });
     return build.save()
         .then(userDTO => {
@@ -78,7 +79,9 @@ const create = user => {
                     imagesDir: user.settings.imagesDir,
                     avatar: user.settings.avatar,
                     category: user.settings.category,
+                    businessCategory: user.settings.businessCategory,
                     displayName: user.settings.displayName,
+                    tabNumber: user.settings.tabNumber,
                     id: userDTO.id
                 }),
                 MaisTokenSchema.create({

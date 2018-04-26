@@ -1,30 +1,22 @@
 import React, { Component } from "react";
 import Cookie from "js-cookie";
 import {
-    COOKIE,
-    MaisAPI
+    COOKIE
 } from "../../../../constants";
+import { connect } from "../socket";
 
 class CabinetPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: null
+            isConnected: false
         };
     }
     componentWillMount() {
-        fetch(MaisAPI["USER"], {
-            method: "GET",
-            credentials: "include",
-            mode: "cors"
-        })
-        .then(response => response.json())
-        .then(response => {
-            if(response.success) {
-                this.setState({
-                    user: response.user
-                });
-            }
+        connect(() => {
+            this.setState({
+                isConnected: true
+            });
         });
     }
     onExit(e) {
@@ -33,14 +25,13 @@ class CabinetPage extends Component {
         window.location.href = "/";
     }
     render() {
-        let user = null;
-        if(this.state.user) {
-            console.log(this.state.user);
-            user = <div>{this.state.user.nick}</div>
+        let cabinet = <span>Loading...</span>;
+        if(this.state.isConnected) {
+            cabinet = <span>Connected!</span>
         }
         return (
             <div>
-                {user}
+                {cabinet}<br/>
                 <button className="btn" onClick={this.onExit.bind(this)}>Выйти</button>
             </div>
         );

@@ -10,7 +10,7 @@ const Settings = (sequelize, DataTypes) =>
     sequelize.define(SCHEMA, {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
         imagesDir: { type: DataTypes.STRING, allowNull: true },
-        avatar: { type: DataTypes.STRING, allowNull: true },
+        avatar: { type: DataTypes.TEXT, allowNull: true },
         category: { type: DataTypes.STRING, allowNull: true },
         businessCategory: { type: DataTypes.STRING, allowNull: true },
         displayName: { type: DataTypes.STRING, allowNull: true },

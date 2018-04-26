@@ -9,11 +9,11 @@ module.exports = env => {
     return {
         mode,
         entry: [
-            path.resolve(__dirname, "wwwroot/client/source/index.js")
+            path.resolve(__dirname, "wwwroot/scripts/source/index.js")
         ],
         output: {
             pathinfo: true,
-            path: path.join(__dirname, "wwwroot/client/bundles"),
+            path: path.join(__dirname, "wwwroot/scripts/bundles"),
             filename: "bundle.js",
             chunkFilename: "[name].chunk.js",
             publicPath: "/"

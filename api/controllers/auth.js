@@ -67,6 +67,7 @@ module.exports = router => {
 
     router.put("/create", (req, res) => {
         let user = new User(req.body);
+        user.statusMais = true;
         UserAPI.create(user)
             .then(user => {
                 const token = releaseToken(user);

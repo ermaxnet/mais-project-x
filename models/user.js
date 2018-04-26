@@ -1,6 +1,6 @@
 const Settings = require("./settings"),
          Token = require("./token"),
-      STATUSES = require("../constants").STATUSES;
+         STATUSES = require("../constants").STATUSES;
 
 class User {
     constructor({ 
@@ -12,7 +12,8 @@ class User {
         middle_name, 
         email, 
         status_pzk, 
-        status_mais, 
+        status_mais,
+        status, 
         Settings: settings = {}, 
         MaisToken: maisToken = {}, 
         PzkToken: pzkToken = {} 
@@ -24,8 +25,9 @@ class User {
         this.lastName = last_name;
         this.middleName = middle_name;
         this.email = email;
-        this.statusPzkCode = status_pzk;
-        this.statusMaisCode = status_mais;
+        this.statusPzk = status_pzk;
+        this.statusMais = status_mais;
+        this.statusCode = status;
         this.settings = new Settings(settings);
         this.maisToken = new Token(maisToken);
         this.pzkToken = new Token(pzkToken);
@@ -33,11 +35,8 @@ class User {
     get fullName() {
         return `${this.firstName} ${this.lastName}`;
     }
-    get statusPzk() {
-        return STATUSES[this.statusPzkCode];
-    }
-    get statusMais() {
-        return STATUSES[this.statusMaisCode];
+    get status() {
+        return STATUSES[this.statusCode];
     }
     get displayName() {
         return this.settings.displayName

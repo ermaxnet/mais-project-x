@@ -24,9 +24,6 @@ class WelcomePage extends Component {
             email: ""
         };
     }
-    componentWillMount() {
-        
-    }
     changeView(e, viewMode) {
         if(e) { e.preventDefault(); }
         this.setState({ 
@@ -49,8 +46,7 @@ class WelcomePage extends Component {
         .then(response => {
             if(response.success) {
                 Cookie.set(COOKIE, response.token, { expires: 1 });
-                window.location.href = "/cabinet";
-                return;
+                return window.location.href = "/cabinet";
             }
             console.error(response.error);
         });
@@ -72,8 +68,7 @@ class WelcomePage extends Component {
         .then(response => {
             if(response.success) {
                 Cookie.set(COOKIE, response.token, { expires: 1 });
-                window.location.href = "/cabinet";
-                return;
+                return window.location.href = "/cabinet";
             }
             console.error(response.error);
         });

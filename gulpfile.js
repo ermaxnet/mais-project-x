@@ -1,5 +1,9 @@
 const package = require("./package.json");
 
+const env = {
+    WEBPACK_PROD_MODE: false
+};
+
 const          gulp = require("gulp"),
                 del = require("del"),
                 iff = require("gulp-if"),
@@ -20,8 +24,9 @@ const          gulp = require("gulp"),
            imagemin = require("gulp-imagemin"),
                svgo = require("gulp-svgmin"),
         runSequence = require("run-sequence").use(gulp),
-            webpack = require("webpack-stream"),
-      webpackConfig = require("./webpack.config.js");
+      webpackStream = require("webpack-stream"),
+            webpack = require("webpack"),
+      webpackConfig = require("./webpack.config.js")(env);
 
 const onError = err => {
     console.error(err);
@@ -36,10 +41,6 @@ const banner =
  * @copyright   Copyright (c) ${moment().format("YYYY")}, ${package.author}
 */
 `; //${gitRevSync.short()} [${gitRevSync.branch()}]
-
-const env = {
-    WEBPACK_PROD_MODE: false
-};
 
 gulp.task("clean", () => {
     fancyLog("-> Clean assets directory");
@@ -125,7 +126,7 @@ gulp.task("es6-scripts", () => {
         .pipe(newer({ dest: package.paths.build.js + "*.js" }))
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(print())
-        .pipe(webpack(webpackConfig(env), require("webpack")))
+        .pipe(webpackStream(webpackConfig, webpack))
         .pipe(header(banner))
         .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest(package.paths.build.js));

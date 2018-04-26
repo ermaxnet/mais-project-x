@@ -13,6 +13,7 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
+    "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
@@ -27,9 +28,13 @@
     "pg-hstore": "^2.3.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
+    "redux": "^4.0.0",
     "sequelize": "^4.37.6",
-    "serve-static": "^1.13.2"
+    "serve-static": "^1.13.2",
+    "socket.io": "^2.1.0",
+    "socket.io-redis": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.46",
@@ -64,11 +69,11 @@
     "src": {
       "scss": "./wwwroot/assets/scss/",
       "images": "./wwwroot/assets/images/",
-      "js": "./wwwroot/client/source/"
+      "js": "./wwwroot/scripts/source/"
     },
     "build": {
       "css": "./wwwroot/assets/css/",
-      "js": "./wwwroot/client/bundles/"
+      "js": "./wwwroot/scripts/bundles/"
     },
     "dist": {
       "css": "assets/css/",
@@ -90,7 +95,7 @@
     ],
     "distLibs": [],
     "distJs": [
-      "./wwwroot/client/bundles/*.js"
+      "./wwwroot/scripts/bundles/*.js"
     ]
   }
 }
