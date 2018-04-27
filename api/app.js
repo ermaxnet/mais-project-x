@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(cors({
-    origin: "http://127.0.0.3",
+    origin: "http://127.0.0.1:5000",
     credentials: true
 }));
 app.use("/auth", require("./controllers/auth")(express.Router()))
@@ -37,8 +37,8 @@ sequelize
     .then(() => sequelize.sync())
     .then(() => {
         const server = http.createServer(app);
-        attachSocket(server).listen(app.get("port"), () => {
-            console.log(`Serving: localhost ${app.get("port")}`);
+        attachSocket(server).listen(app.get("port"), "127.0.0.1", () => {
+            console.log(`Serving: 127.0.0.1 ${app.get("port")}`);
         });
     })
     .catch(err => console.error(err));

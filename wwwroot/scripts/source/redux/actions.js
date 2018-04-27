@@ -6,5 +6,10 @@ export const CABINET_ACTIONS = {
             type: REDUX_ACTIONS["CABINET.USER-ADD"],
             user
         };
+    },
+    CONNECT_USER() {
+        return {
+            type: REDUX_ACTIONS["CABINET.USER-CONNECT"]
+        };
     }
 };

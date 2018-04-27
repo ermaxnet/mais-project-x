@@ -37,15 +37,16 @@ const banner =
  * @project     ${package.name}
  * @author      ${package.author}
  * @build       ${moment().format("LLLL")}
- * @release     
+ * @release     ${gitRevSync.short()} [${gitRevSync.branch()}]
  * @copyright   Copyright (c) ${moment().format("YYYY")}, ${package.author}
 */
-`; //${gitRevSync.short()} [${gitRevSync.branch()}]
+`;
 
 gulp.task("clean", () => {
     fancyLog("-> Clean assets directory");
-    del(package.paths.assets + "assets/**/*");
-    del(package.paths.assets + "scripts/**/*");
+    del.sync([ 
+        package.paths.assets + "assets/**/*", package.paths.assets + "scripts/**/*" 
+    ]);
 });
 
 gulp.task("compile:scss", () => {

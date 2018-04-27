@@ -2,7 +2,8 @@ const Strategy = require("passport-strategy").Strategy,
           http = require("http"),
            url = require("url"),
    querystring = require("querystring"),
-    connection = require("../settings.json").pzk.connection;
+    connection = require("../settings.json").pzk.connection,
+         sharp = require("sharp");
 
 const {
     User,
@@ -23,6 +24,24 @@ class PzkTokenStrategy extends Strategy {
                 "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
             }
         };
+    }
+    processImage(imageBase64) {
+        if(!imageBase64) {
+            return Promise.resolve(null);
+        }
+        const imageBuffer = Buffer.from(imageBase64, "base64");
+        const maskBuffer = new Buffer(
+            `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 100 100">
+                <path d="M0,50v50h50C22.4,100,0,77.6,0,50z" fill="transparent"/>
+                <path d="M50,0H0v50C0,22.4,22.4,0,50,0z" fill="transparent"/>
+                <path d="M50,100h50V50C100,77.6,77.6,100,50,100z" fill="transparent"/>
+                <path d="M50,0c27.6,0,50,22.4,50,50V0H50z" fill="transparent"/>
+            </svg>`
+        );
+        return sharp(imageBuffer)
+            .resize(200, 200).overlayWith(maskBuffer)
+            .jpeg({ quality: 90 }).toBuffer()
+            .then(data => data.toString("base64"));
     }
     authenticate(req, options) {
         const body = {
@@ -46,16 +65,16 @@ class PzkTokenStrategy extends Strategy {
                         return this.error(new Error(apiResponse.error));
                     }
                     const [
-                        secondName,
-                        firstName,
-                        middleName = null
+                        last_name,
+                        first_name,
+                        middle_name = null
                     ] = apiResponse.fullName.split(" ");
                     const user = new User({
                         id: 0,
                         username: body.userName,
-                        first_name: firstName,
-                        last_name: secondName,
-                        middle_name: middleName,
+                        first_name,
+                        last_name,
+                        middle_name,
                         email: apiResponse.email,
                         status_pzk: true,
                         Settings: {
@@ -68,7 +87,11 @@ class PzkTokenStrategy extends Strategy {
                             token: apiResponse.token
                         }
                     });
-                    UserAPI.create(user)
+                    this.processImage(user.settings.avatar)
+                        .then(avatar => {
+                            user.settings.avatar = avatar;
+                            return UserAPI.create(user);    
+                        })
                         .then(user => {
                             if(user) {
                                 return this.success(user, null);

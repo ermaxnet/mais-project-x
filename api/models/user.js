@@ -67,14 +67,14 @@ UserSchema.hook("beforeCreate", user => {
 const create = user => {
     checkType(user);
     const build = UserSchema.build({
-        username: user.nick,
+        username: user.username,
         hash: user.hash,
-        first_name: user.firstName,
-        last_name: user.lastName,
-        middle_name: user.middleName,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        middle_name: user.middle_name,
         email: user.email,
-        status_pzk: user.statusPzk,
-        status_mais: user.statusMais
+        status_pzk: user.status_pzk,
+        status_mais: user.status_mais
     });
     return build.save()
         .then(userDTO => {
@@ -89,11 +89,11 @@ const create = user => {
                     id: userDTO.id
                 }),
                 MaisTokenSchema.create({
-                    token: user.maisToken.value,
+                    token: user.maisToken.token,
                     id: userDTO.id
                 }),
                 PzkTokenSchema.create({
-                    token: user.pzkToken.value,
+                    token: user.pzkToken.token,
                     id: userDTO.id
                 }),
                 Promise.resolve(userDTO)
@@ -141,13 +141,8 @@ const byToken = token =>
 const update = (userId, user) => {
     return UserSchema.findById(userId)
         .then(userDTO => {
-            return userDTO.update({ 
-                first_name: user.firstName,
-                last_name: user.lastName,
-                middle_name: user.middleName,
-                email: user.email,
-                status: user.statusCode
-            }).then(userDTO => new User(userDTO));
+            return userDTO.update({ ...user })
+                .then(userDTO => new User(userDTO));
         });
 };
 
@@ -169,11 +164,23 @@ const updateMAISToken = (userId, token) => {
 
 const connect = (userId, token = null) => {
     const tasks = [
-        update(userId, { statusCode: STATUSES_COD["connected"] })
+        update(userId, { status: STATUSES_COD["connected"] })
     ];
     if(token) {
         tasks.push(
             updateMAISToken(userId, token)
+        );
+    }
+    return Promise.all(tasks);
+};
+
+const disconnect = (userId, hasToken = false) => {
+    const tasks = [
+        update(userId, { status: STATUSES_COD["disconnected"] })
+    ];
+    if(hasToken) {
+        tasks.push(
+            updateMAISToken(userId, null)
         );
     }
     return Promise.all(tasks);
@@ -192,6 +199,7 @@ module.exports = {
         update,
         updatePZKToken,
         updateMAISToken,
-        connect
+        connect,
+        disconnect
     }
 };

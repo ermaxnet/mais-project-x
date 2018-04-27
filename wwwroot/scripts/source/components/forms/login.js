@@ -18,14 +18,14 @@ const LoginForm = props => {
             <form className="form login__form">
                 <div className="form__group">
                     <div className="form__control">
-                        <label htmlFor="nick" className="form__label">Имя пользователя</label>
+                        <label htmlFor="username" className="form__label">Имя пользователя</label>
                         <input 
                             type="text" 
-                            name="nick" 
-                            id="nick" 
+                            name="username" 
+                            id="username" 
                             placeholder="Логин" 
                             className="form__input" 
-                            value={props.nick}
+                            value={props.username}
                             onChange={props.onInput}
                         />
                     </div>
@@ -67,7 +67,7 @@ const LoginForm = props => {
 };
 
 LoginForm.propTypes = {
-    nick: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     isPzk: PropTypes.bool.isRequired
 };

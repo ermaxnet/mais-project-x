@@ -15,7 +15,7 @@ const WELCOME_PAGE_STATE = {
     LOGIN: 200
 };
 
-const API = "http://localhost:8002/";
+const API = "http://127.0.0.1:8002/";
 const COOKIE = "bearer";
 
 const MaisAPI = {
@@ -28,8 +28,13 @@ const MaisAPI = {
 const SOCKET = API + "mais";
 
 const REDUX_ACTIONS = {
-    ["CABINET.USER-ADD"]: "CABINET.USER-ADD"
+    ["CABINET.USER-ADD"]: "CABINET.USER-ADD",
+    ["CABINET.USER-CONNECT"]: "CABINET.USER-CONNECT"
 
+};
+
+const SOCKET_EVENTS = {
+    ["CABINET.USER-CONNECTED"]: "CABINET.USER-CONNECTED"
 };
 
 module.exports = {
@@ -40,5 +45,6 @@ module.exports = {
     MaisAPI,
     COOKIE,
     SOCKET,
-    REDUX_ACTIONS
+    REDUX_ACTIONS,
+    SOCKET_EVENTS
 };

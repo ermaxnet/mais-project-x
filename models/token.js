@@ -1,9 +1,9 @@
 const moment = require("moment");
 
 class Token {
-    constructor({ id: key, token: value, updatedAt }) {
-        this.key = key;
-        this.value = value;
+    constructor({ id, token, updatedAt }) {
+        this.id = id;
+        this.token = token;
         this.updatedAt = moment(updatedAt);
     }
 };

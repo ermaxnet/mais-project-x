@@ -1,5 +1,11 @@
 import io from "socket.io-client";
-import { SOCKET } from "../../../constants";
+import { 
+    SOCKET,
+    SOCKET_EVENTS
+} from "../../../constants";
+import {
+    addUser
+} from "./models/cabinet";
 
 const socket = io(SOCKET, {
     transports: ["websocket"],
@@ -13,7 +19,9 @@ export const connect = done => {
             done();
         }
 
-        // next
+        socket.on(SOCKET_EVENTS["CABINET.USER-CONNECTED"], user => {
+            addUser(user);
+        });
     });
 };
 

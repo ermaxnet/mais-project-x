@@ -1,0 +1,84 @@
+.cabinet {
+    //position: relative;
+
+    &__aside {
+        position: absolute;
+        width: 420px;
+        height: 100%;
+        z-index: 1000;
+        background-color: $aside-fill-color;
+    }
+
+    &__content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding-left: 420px;
+        background-color: $fill-background-color;
+
+        div {
+            padding: 100px;
+        }
+    }
+}
+
+.user {
+    position: relative;
+    padding: 30px 30px 45px;
+    background-image: $user-header-gradient;
+
+    &__name {
+        text-align: center;
+
+        &-text {
+            @include bold(28px, 82px);
+            color: white;
+            text-transform: uppercase;
+        }
+    }
+
+    &__avatar {
+        position: absolute;
+        width: 82px;
+        height: 82px;
+        left: 50%;
+        border-radius: 50%;
+        @include translateX(-50%);
+
+        .avatar__image {
+            width: 100%;
+            height: 100%;
+            border: 10px solid white;
+        }
+
+        .avatar__status {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            padding: 4px;
+            border-radius: 50%;
+            background-color: white;
+            top: 0; right: -10px;
+
+            &::after {
+                position: absolute;
+                content: "";
+                width: 7px; height: 7px;
+                border-radius: 50%;
+            }
+        }
+
+        &.status-connected {
+            .avatar__status::after {
+                background-color: $status-connected;
+            }
+        }
+    }
+}
+
+.avatar {
+
+    .avatar__image {
+        border-radius: 50%;
+    }
+}

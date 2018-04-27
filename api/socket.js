@@ -6,13 +6,25 @@ const         sio = require("socket.io"),
            cookie = require("cookie");
 
 const { UserAPI } = require("./models/user");
+const {
+    SOCKET_EVENTS
+} = require("../constants");
 
 const connect = io => {
     io.of("/mais").on("connection", socket => {
-        const user = socket.request.user;
-        UserAPI.connect(user.id, socket.id)
-            .then(([ , token ]), () => {
-                console.log(token);
+        UserAPI.connect(socket.request.user.id, socket.id)
+            .then(([ { status }, token ]) => {
+                socket.request.user.status = status;
+                socket.request.user.maisToken = token;
+
+                socket.emit(SOCKET_EVENTS["CABINET.USER-CONNECTED"], socket.request.user);
+
+                socket.on("disconnecting", () => {
+                    UserAPI.disconnect(socket.request.user.id, true)
+                        .then(() => {
+                            // more here...
+                        });
+                });
             });
 
     });

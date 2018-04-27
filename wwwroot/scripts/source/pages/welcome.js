@@ -15,12 +15,12 @@ class WelcomePage extends Component {
         super(props);
         this.state = {
             viewMode: WELCOME_PAGE_STATE.LOGIN,
-            nick: "",
-            password: "",
+            username: "Eremin_MY",
+            password: "VegasmaN17FacebooK111",
             password2: "",
             isPzk: true,
             firstName: "",
-            secondName: "",
+            lastName: "",
             email: ""
         };
     }
@@ -28,7 +28,7 @@ class WelcomePage extends Component {
         if(e) { e.preventDefault(); }
         this.setState({ 
             viewMode,  
-            nick: "",
+            username: "",
             password: ""
         });
     }
@@ -39,7 +39,7 @@ class WelcomePage extends Component {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
             },
-            body: `id=0&username=${this.state.nick}&hash=${this.state.password}&first_name=${this.state.firstName}&last_name=${this.state.secondName}&email=${this.state.email}`,
+            body: `id=0&username=${this.state.username}&hash=${this.state.password}&first_name=${this.state.firstName}&last_name=${this.state.lastName}&email=${this.state.email}`,
             mode: "cors"
         })
         .then(response => response.json())
@@ -61,7 +61,7 @@ class WelcomePage extends Component {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
             },
-            body: `username=${this.state.nick}&password=${this.state.password}`,
+            body: `username=${this.state.username}&password=${this.state.password}`,
             mode: "cors"
         })
         .then(response => response.json())
@@ -101,7 +101,7 @@ class WelcomePage extends Component {
                     <LoginFrom 
                         changeView={this.changeView.bind(this)} 
                         onInput={this.onInput.bind(this)}
-                        nick={this.state.nick}
+                        username={this.state.username}
                         password={this.state.password}
                         isPzk={this.state.isPzk}
                         onLogin={this.onLogin.bind(this)}
@@ -112,11 +112,11 @@ class WelcomePage extends Component {
                     <RegisterForm 
                         changeView={this.changeView.bind(this)} 
                         onInput={this.onInput.bind(this)}
-                        nick={this.state.nick}
+                        username={this.state.username}
                         password={this.state.password}
                         password2={this.state.password2}
                         firstName={this.state.firstName}
-                        secondName={this.state.secondName}
+                        lastName={this.state.lastName}
                         email={this.state.email}
                         onRegister={this.onRegister.bind(this)}
                     />

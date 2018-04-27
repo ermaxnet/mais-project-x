@@ -19,29 +19,29 @@ class User {
         PzkToken: pzkToken = {} 
     }) {
         this.id = id;
-        this.nick = username;
+        this.username = username;
         this.hash = hash;
-        this.firstName = first_name;
-        this.lastName = last_name;
-        this.middleName = middle_name;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.middle_name = middle_name;
         this.email = email;
-        this.statusPzk = status_pzk;
-        this.statusMais = status_mais;
-        this.statusCode = status;
+        this.status_pzk = status_pzk;
+        this.status_mais = status_mais;
+        this.status = status;
         this.settings = new Settings(settings);
         this.maisToken = new Token(maisToken);
         this.pzkToken = new Token(pzkToken);
     }
-    get fullName() {
-        return `${this.firstName} ${this.lastName}`;
+    get full_name() {
+        return `${this.first_name} ${this.last_name}`;
     }
-    get status() {
-        return STATUSES[this.statusCode];
+    get statusName() {
+        return STATUSES[this.status];
     }
     get displayName() {
         return this.settings.displayName
             ? this.settings.displayName
-            : this.fullName;
+            : this.full_name;
     }
 };
 module.exports = User;

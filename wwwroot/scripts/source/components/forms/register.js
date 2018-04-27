@@ -18,14 +18,14 @@ const RegisterForm = props => {
             <form className="form login__form">
                 <div className="form__group">
                     <div className="form__control">
-                        <label htmlFor="nick" className="form__label">Имя пользователя</label>
+                        <label htmlFor="username" className="form__label">Имя пользователя</label>
                         <input 
                             type="text" 
-                            name="nick" 
-                            id="nick" 
+                            name="username" 
+                            id="username" 
                             placeholder="Логин" 
                             className="form__input"
-                            value={props.nick} 
+                            value={props.username} 
                             onChange={props.onInput}
                         />
                     </div>
@@ -70,14 +70,14 @@ const RegisterForm = props => {
                         />
                     </div>
                     <div className="form__control form__control_50">
-                        <label htmlFor="secondName" className="form__label">Фамилия</label>
+                        <label htmlFor="lastName" className="form__label">Фамилия</label>
                         <input 
                             type="text" 
-                            name="secondName" 
-                            id="secondName" 
+                            name="lastName" 
+                            id="lastName" 
                             placeholder="Фамилия" 
                             className="form__input"
-                            value={props.secondName} 
+                            value={props.lastName} 
                             onChange={props.onInput}  
                         />
                     </div>
@@ -106,11 +106,11 @@ const RegisterForm = props => {
 };
 
 RegisterForm.propTypes = {
-    nick: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     password2: PropTypes.string.isRequired,
     firstName: PropTypes.string.isRequired,
-    secondName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired
 };
 
