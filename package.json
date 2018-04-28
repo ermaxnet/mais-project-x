@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "back-end": "node ./api/app.js",
+    "front-end": "gulp"
+  },
   "author": "Max Eremin",
   "license": "ISC",
   "repository": {

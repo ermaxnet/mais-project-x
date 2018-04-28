@@ -15,4 +15,12 @@ export const addUser = userDTO => {
     store.dispatch(CABINET_ACTIONS.CONNECT_USER());
 };
 
+export const showContactsBook = () => {
+    store.dispatch(CABINET_ACTIONS.SHOW_CONTACTS_BOOK());
+};
+
+export const showSearchBook = () => {
+    store.dispatch(CABINET_ACTIONS.SHOW_SEARCH_BOOK());
+};
+
 export { User };

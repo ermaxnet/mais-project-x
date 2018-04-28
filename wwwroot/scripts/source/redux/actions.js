@@ -11,5 +11,15 @@ export const CABINET_ACTIONS = {
         return {
             type: REDUX_ACTIONS["CABINET.USER-CONNECT"]
         };
+    },
+    SHOW_CONTACTS_BOOK() {
+        return {
+            type: REDUX_ACTIONS["CABINET.CONTACTS-BOOK"]
+        };
+    },
+    SHOW_SEARCH_BOOK() {
+        return {
+            type: REDUX_ACTIONS["CABINET.SEARCH-BOOK"]
+        };
     }
 };

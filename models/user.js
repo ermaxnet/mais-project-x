@@ -1,6 +1,6 @@
 const Settings = require("./settings"),
          Token = require("./token"),
-         STATUSES = require("../constants").STATUSES;
+      STATUSES = require("../constants").STATUSES;
 
 class User {
     constructor({ 

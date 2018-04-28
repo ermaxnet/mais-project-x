@@ -1,19 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {
+    svgIcon
+} from "../../functions";
 
 const MenuItem = props => {
-    const icon = `
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/images/icons.svg#${props.icon}"></use>`;
+    const icon = svgIcon(props.icon);
     return (
-        <li className={`menu-item ${props.className || ""}`}>
-            <svg className="menu-item__icon" dangerouslySetInnerHTML={{ __html: icon }}></svg>
+        <li className={`menu-item ${props.className || ""} ${props.isActive ? "menu-item_active" : ""}`} onClick={props.onClick}>
+            <svg className="menu-item__icon icon" dangerouslySetInnerHTML={{ __html: icon }}></svg>
         </li>
     );
 };
 
 MenuItem.propTypes = {
     icon: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    isActive: PropTypes.bool
+};
+
+MenuItem.defaultProps = {
+    isActive: false
 };
 
 export default MenuItem;

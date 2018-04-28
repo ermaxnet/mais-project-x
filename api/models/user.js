@@ -188,6 +188,7 @@ const disconnect = (userId, hasToken = false) => {
     
 module.exports = {
     User,
+    UserAssociations: associations,
     UserAPI: {
         create,
         validatePassword,
