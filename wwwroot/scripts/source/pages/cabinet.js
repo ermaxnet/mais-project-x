@@ -9,6 +9,8 @@ import CabinetHeader from "../components/cabinet/header";
 import MenuItem from "../components/cabinet/menu-item";
 import BookHeader from "../components/book/header";
 import SearchBox from "../components/cabinet/search-box";
+import ContactsBook from "../components/book/contacts-book";
+import Messenger from "../components/messenger";
 import {
     showContactsBook,
     showSearchBook
@@ -45,17 +47,18 @@ class CabinetPage extends Component {
             let boxSearch = null;
             if(this.props.isContactsBook) {
                 book = (
-                    <div className="book book__contacts">
+                    <section className="book book__contacts">
                         <BookHeader text="Мои контакты" />
-                    </div>
+                        <ContactsBook />
+                    </section>
                 );
             }
             if(this.props.isSearchBook) {
                 boxSearch = <SearchBox onBack={this.onBack.bind(this)} />;
                 book = (
-                    <div className="book book__search">
+                    <section className="book book__search">
                         <BookHeader text="Результаты поиска" />
-                    </div>
+                    </section>
                 );
             }
             cabinet = (
@@ -76,6 +79,7 @@ class CabinetPage extends Component {
                             {book}
                         </aside>
                         <main className="cabinet__content">
+                            <Messenger />
                         </main>
                     </div>
                 </>

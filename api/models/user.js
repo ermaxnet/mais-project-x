@@ -21,15 +21,15 @@ const checkType = user => {
 const associations = [
     {
         model: SettingsSchema,
-        as: "Settings"
+        as: "settings"
     },
     {
         model: MaisTokenSchema,
-        as: "MaisToken"
+        as: "maisToken"
     },
     {
         model: PzkTokenSchema,
-        as: "PzkToken"
+        as: "pzkToken"
     }
 ];
 
@@ -102,9 +102,9 @@ const create = user => {
         .then(([ settingsDTO, maisTokenDTO, pzkTokenDTO, userDTO ]) => 
             new User({
                 ...userDTO.dataValues,
-                Settings: settingsDTO,
-                MaisToken: maisTokenDTO,
-                PzkToken: userDTO
+                settings: settingsDTO,
+                maisToken: maisTokenDTO,
+                pzkToken: pzkTokenDTO
             }));
 };
 
@@ -130,7 +130,7 @@ const byToken = token =>
             associations[1],
             {
                 model: PzkTokenSchema,
-                as: "PzkToken",
+                as: "pzkToken",
                 where: { token }
             }
         ]

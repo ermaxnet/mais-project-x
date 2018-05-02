@@ -1,0 +1,25 @@
+.screen {
+    position: relative;
+
+    &_welcome {
+        padding: 200px 100px;
+
+        .screen__message {
+            text-align: center;
+
+            span:nth-child(1) {
+                display: block;
+                @include bold(22px, 48px);
+                color: $text-color-2;
+                text-transform: uppercase;
+                margin-bottom: 20px;
+                border-bottom: 2px solid $text-color-2;
+            }
+        }
+    }
+
+    &__message {
+        @include regular(20px, 26px);
+        color: $text-color-1;
+    }
+}

@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 const BookHeader = props => {
     return (
-        <header className="book__header">
+        <h3 className="book__header">
             <span>{props.text}</span>
-        </header>
+        </h3>
     );
 };
 

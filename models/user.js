@@ -14,9 +14,9 @@ class User {
         status_pzk, 
         status_mais,
         status, 
-        Settings: settings = {}, 
-        MaisToken: maisToken = {}, 
-        PzkToken: pzkToken = {} 
+        settings = {}, 
+        maisToken = {}, 
+        pzkToken = {} 
     }) {
         this.id = id;
         this.username = username;

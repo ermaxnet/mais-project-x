@@ -13,11 +13,11 @@ const Op = require("sequelize").Op;
 const associations = [
     {
         model: ContactSchema,
-        as: "Settings"
+        as: "settings"
     },
     {
         model: UserSchema,
-        as: "Contact",
+        as: "contact",
         include: UserAssociations
     }
 ];
@@ -70,8 +70,8 @@ const add = contact => checkToken(contact)
     .then(([ contactDTO, relationDTO, user ]) => 
         new Contact({
             ...relationDTO.dataValues,
-            Settings: contactDTO,
-            Contact: user
+            settings: contactDTO,
+            contact: user
         }));
 
 const checkToken = contact => {

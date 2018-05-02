@@ -7,12 +7,12 @@ const sequelize = require("./sequelize"),
         Contact = require("./schemas/contact-schema")(sequelize, DataTypes),
        Relation = require("./schemas/relation-schema")(sequelize, DataTypes);
 
-User.hasOne(Settings, { foreignKey: "id", as: "Settings" });
-User.hasOne(MaisToken, { foreignKey: "id", as: "MaisToken" });
-User.hasOne(PzkToken, { foreignKey: "id", as: "PzkToken" });
+User.hasOne(Settings, { foreignKey: "id", as: "settings" });
+User.hasOne(MaisToken, { foreignKey: "id", as: "maisToken" });
+User.hasOne(PzkToken, { foreignKey: "id", as: "pzkToken" });
 
-Relation.belongsTo(Contact, { foreignKey: "contactId", targetKey: "id", as: "Settings" });
-Relation.belongsTo(User, { foreignKey: "userId", targetKey: "id", as: "Contact" });
+Relation.belongsTo(Contact, { foreignKey: "contactId", targetKey: "id", as: "settings" });
+Relation.belongsTo(User, { foreignKey: "userId", targetKey: "id", as: "contact" });
 
 module.exports = {
     sequelize,

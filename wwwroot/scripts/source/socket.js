@@ -6,6 +6,9 @@ import {
 import {
     addUser
 } from "./models/cabinet";
+import {
+    setContactsList
+} from "./models/contacts";
 
 const socket = io(SOCKET, {
     transports: ["websocket"],
@@ -19,7 +22,8 @@ export const connect = done => {
             done();
         }
 
-        socket.on(SOCKET_EVENTS["CABINET.USER-CONNECTED"], user => {
+        socket.on(SOCKET_EVENTS["CABINET.USER-CONNECTED"], (user, contacts) => {
+            setContactsList(contacts);
             addUser(user);
         });
     });

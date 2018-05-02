@@ -23,3 +23,21 @@ export const CABINET_ACTIONS = {
         };
     }
 };
+
+export const CONTACTS_ACTIONS = {
+    SET_CONTACTS_LIST(contacts) {
+        return {
+            type: REDUX_ACTIONS["CONTACTS.SET-LIST"],
+            contacts
+        };
+    }
+};
+
+export const MESSENGER_ACTIONS = {
+    SELECT_CONTACT(contact) {
+        return {
+            type: REDUX_ACTIONS["MESSENGER.SELECT-CONTACT"],
+            contact
+        };
+    }
+};

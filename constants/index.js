@@ -1,13 +1,15 @@
 const STATUSES = {
     [1]: "connected",
     [0]: "disconnected",
-    [-100]: "unknown"
+    [-100]: "unknown",
+    [100]: "hidden"
 };
 
 const STATUSES_COD = {
     ["connected"]: 1,
     ["disconnected"]: 0,
-    ["unknown"]: -100
+    ["unknown"]: -100,
+    ["hidden"]: 100
 };
 
 const WELCOME_PAGE_STATE = {
@@ -31,7 +33,11 @@ const REDUX_ACTIONS = {
     ["CABINET.USER-ADD"]: "CABINET.USER-ADD",
     ["CABINET.USER-CONNECT"]: "CABINET.USER-CONNECT",
     ["CABINET.CONTACTS-BOOK"]: "CABINET.CONTACTS-BOOK",
-    ["CABINET.SEARCH-BOOK"]: "CABINET.SEARCH-BOOK"
+    ["CABINET.SEARCH-BOOK"]: "CABINET.SEARCH-BOOK",
+
+    ["CONTACTS.SET-LIST"]: "CONTACTS.SET-LIST",
+
+    ["MESSENGER.SELECT-CONTACT"]: "MESSENGER.SELECT-CONTACT"
 
 };
 
