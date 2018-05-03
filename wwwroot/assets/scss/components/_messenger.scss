@@ -1,0 +1,61 @@
+.messenger {
+    position: absolute;
+    width: calc(100% - 420px);
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+
+    &__history {
+        width: 100%;
+        height: auto;
+        flex: 1 1;
+    }
+
+    &__editor {
+        width: 100%;
+        height: 250px;
+        flex: 0 0 250px;
+    }
+}
+
+.contact-header {
+    padding: 0 45px;
+    border-bottom: 1px solid $base-border-color;
+    flex: 0 0;
+
+    .contact__title {
+        @include bold(22px, 72px);
+        margin: 0;
+        color: $text-color-1;
+    }
+
+    .contact__status {
+        position: relative;
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        background-color: $text-color-2;
+        vertical-align: middle;
+        border-radius: 50%;
+        margin-left: 10px;
+    }
+
+    &.status-disconnected {
+        .contact__status {
+            background-color: $status-disconnected;
+        }
+    }
+
+    &.status-connected {
+        .contact__status {
+            background-color: $status-connected;
+        }
+    }
+
+    &.status-hidden {
+        .contact__status {
+            display: none;
+        }
+    }
+}

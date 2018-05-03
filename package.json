@@ -19,6 +19,7 @@
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
+    "draft-js": "^0.10.5",
     "express": "^4.16.3",
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
@@ -38,6 +39,7 @@
     "sequelize": "^4.37.6",
     "serve-static": "^1.13.2",
     "sharp": "^0.20.1",
+    "showdown": "^1.8.6",
     "socket.io": "^2.1.0",
     "socket.io-redis": "^5.2.0"
   },
@@ -93,6 +95,7 @@
   },
   "globs": {
     "distCss": [
+      "./node_modules/draft-js/dist/Draft.css",
       "./wwwroot/assets/css/*.css"
     ],
     "distFonts": [

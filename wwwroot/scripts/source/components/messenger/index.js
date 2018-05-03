@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Screen from "./screen";
 import ContactHeader from "./header";
+import MessageEditor from "./message-editor";
 
 class Messenger extends Component {
     render() {
         const contact = this.props.contact;
-        if(!contact) {
+       /*  if(!contact) {
             return (
                 <Screen className="screen_welcome">
                     <span>Добро пожаловать в Mais Messenger</span>
@@ -17,10 +18,18 @@ class Messenger extends Component {
                     </span>
                 </Screen>
             );
-        }
+        } */
         return (
             <div className="messenger">
-                <ContactHeader contact={contact} />
+                <header className={`contact-header status-connected`}>
+                    <div className="contact__title">
+                        <span>Максим Ерёмин</span>
+                        <span className="contact__status"></span>
+                    </div>
+                </header>
+                <div className="messenger__history"></div>
+                <MessageEditor />
+                {/* <ContactHeader contact={contact} /> */}
             </div>
         );
     }

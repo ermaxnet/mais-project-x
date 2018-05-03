@@ -72,6 +72,7 @@ gulp.task("styles", ["compile:scss"], () => {
         .pipe(newer({ dest: package.paths.assets + package.paths.dist.css + "*.css" }))
         .pipe(print())
         .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(concat("styles.css"))
         .pipe(cssnano({
             discardComments: {
                 removeAll: true
