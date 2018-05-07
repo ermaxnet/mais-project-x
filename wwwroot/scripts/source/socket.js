@@ -9,6 +9,9 @@ import {
 import {
     setContactsList
 } from "./models/contacts";
+import {
+    setIntroMessages
+} from "./models/messenger";
 
 const socket = io(SOCKET, {
     transports: ["websocket"],
@@ -25,6 +28,9 @@ export const connect = done => {
         socket.on(SOCKET_EVENTS["CABINET.USER-CONNECTED"], (user, contacts) => {
             setContactsList(contacts);
             addUser(user);
+        });
+        socket.on(SOCKET_EVENTS["MESSENGER.SET-INTRO-MESSAGES"], messages => {
+            setIntroMessages(messages);
         });
     });
 };

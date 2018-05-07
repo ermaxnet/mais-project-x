@@ -1,8 +1,8 @@
 /**
  * @project     mais
  * @author      Max Eremin
- * @build       Friday, May 4, 2018 2:23 PM
- * @release     24ff589 [master]
+ * @build       Monday, May 7, 2018 5:03 PM
+ * @release     13ba870 [master]
  * @copyright   Copyright (c) 2018, Max Eremin
 */
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["vendor"],{

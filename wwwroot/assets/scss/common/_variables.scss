@@ -1,4 +1,5 @@
 $compatible-fonts: Helvetica, Arial, sans-serif;
+$rhythm-unit: "px";
 
 $base-text-color: rgba(0, 0, 0, .87);
 $inaccent-text-color: rgba(0, 0, 0, .54);
@@ -35,5 +36,8 @@ $text-color-accent: #605F5E;
 
 $contact-selected-fill-color: #79ADDC;
 $messenger-fill-color: transparentize($color: #79ADDC, $amount: .9);
+
+$message-outbox-fill: #D3E2F0;
+$message-inbox-fill: #FAEDE7;
 
 // 79ADDC 605F5E FFC09F

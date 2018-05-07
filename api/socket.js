@@ -7,8 +7,10 @@ const         sio = require("socket.io"),
 
 const { UserAPI } = require("./models/user");
 const { ContactAPI } = require("./models/contact");
+const { MessageAPI } = require("./models/message");
 const {
-    SOCKET_EVENTS
+    SOCKET_EVENTS,
+    MESSAGE_TYPE
 } = require("../constants");
 
 const connect = io => {
@@ -23,6 +25,16 @@ const connect = io => {
 
                 socket.emit(SOCKET_EVENTS["CABINET.USER-CONNECTED"], socket.request.user, contacts);
 
+                socket.on(SOCKET_EVENTS["MESSENGER.GET-INTRO-MESSAGES"], contactId => {
+                    MessageAPI.getPersonalizedMessages(socket.request.user.id, contactId, { type: MESSAGE_TYPE.INTRO })
+                        .then(messages => {
+                            socket.emit(SOCKET_EVENTS["MESSENGER.SET-INTRO-MESSAGES"], messages);
+                        });
+                });
+
+                socket.on("error", err => {
+                    console.error("error");
+                });
                 socket.on("disconnecting", () => {
                     UserAPI.disconnect(socket.request.user.id, true)
                         .then(() => {

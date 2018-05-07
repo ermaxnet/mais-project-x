@@ -13,6 +13,15 @@
         @include text-shadow(
             0 0 2px rgba(255, 255, 255, .8)
         );
+
+        &-image {
+            width: 48px;
+            height: 48px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+            background-image: image-url("logo.svg");
+        }
     }
 }
 

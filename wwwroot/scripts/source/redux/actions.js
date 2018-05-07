@@ -39,5 +39,11 @@ export const MESSENGER_ACTIONS = {
             type: REDUX_ACTIONS["MESSENGER.SELECT-CONTACT"],
             contact
         };
+    },
+    SET_INTRO_MESSAGES(messages) {
+        return {
+            type: REDUX_ACTIONS["MESSENGER.SET-INTO-MESSAGES"],
+            messages
+        }
     }
 };

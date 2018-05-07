@@ -126,6 +126,7 @@ class WelcomePage extends Component {
             <>
                 <header className="header">
                     <div className="header__logo">
+                        <span className="header__logo-image"></span>
                         <span>mais messenger</span>
                     </div>
                 </header>
