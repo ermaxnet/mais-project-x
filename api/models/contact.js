@@ -1,7 +1,8 @@
 const {
     ContactSchema,
     RelationSchema,
-    UserSchema
+    UserSchema,
+    MessageSchema
 } = require("../database");
 const Contact = require("../../models/contact");
 const { 
@@ -37,8 +38,8 @@ const add = contact => checkToken(contact)
             secureToken = `${contact.me}-${contact.userId}`;
         }
         const build = ContactSchema.build({
-            type: contact.type,
-            status: contact.status,
+            type: contact.settings.type,
+            status: contact.settings.status,
             secureToken
         });
         return build.save();
@@ -99,12 +100,31 @@ const getContacts = userId =>
     .then(contacts => contacts 
         ? contacts.map(contactDTO => new Contact(contactDTO)) : []);
 
+const deleteContact = contactId => 
+    ContactSchema.destroy({
+        where: { id: contactId }
+    });
+
+const updateContact = (contactId, contact, userId) => 
+    ContactSchema.findById(contactId)
+        .then(contactDTO => contactDTO.update(contact))
+        .then(() => RelationSchema.findOne({
+            where: {
+                me: userId,
+                contactId
+            },
+            include: associations
+        }))
+        .then(contactDTO => contactDTO ? new Contact(contactDTO) : null);
+
 module.exports = {
     Contact,
     ContactAssociations: associations,
     ContactAPI: {
         add,
         checkToken,
-        getContacts
+        getContacts,
+        deleteContact,
+        updateContact
     }
 };

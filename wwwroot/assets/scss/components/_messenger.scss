@@ -137,23 +137,48 @@
 
     &_intro {
         .message__text {
-            h3 {
+            h4 {
                 text-align: center;
+                font-size: 16px;
+                line-height: 32px;
+                text-transform: uppercase;
+                border-bottom: 2px solid $text-color-2;
                 margin-bottom: 10px;
             }
             text-align: left;
+        }
+
+        &.message_inbox {
+            .message__text {
+                h4 {
+                    border-bottom-color: $text-color-3;
+                }
+            }
+        }
+    }
+
+    &__do {
+        margin-top: 15px;
+        text-align: right;
+        
+        .btn {
+            margin-left: 15px;
         }
     }
 }
 
 .message__text {
-    pre, code {
+    pre, code, p, h1, h2, h3, h4, h5, h6 {
         color: $text-color-1;
+    }
+    pre, code, p {
         @include regular(16px, 1);
         @include adjust-font-size-to(16px);
     }
     h3 {
-        color: $text-color-1;
         @include medium(20px, 1);
+    }
+    h4 {
+        @include medium(18px, 1);
     }
 }

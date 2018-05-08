@@ -372,15 +372,22 @@ body {
 .btn {
   min-width: 64px;
   border: none;
-  background-color: #3A3897;
-  color: white;
   letter-spacing: 1px;
   padding: 0 20px;
   border-radius: 20px;
+  cursor: pointer;
   font-weight: 700;
   font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   line-height: 36px;
+}
+.btn-primary {
+  background-color: #3A3897;
+  color: white;
+}
+.btn-default {
+  background-color: #A3A3A3;
+  color: white;
 }
 
 .btn-link {
@@ -930,13 +937,29 @@ body {
 .message_intro .message__text {
   text-align: left;
 }
-.message_intro .message__text h3 {
+.message_intro .message__text h4 {
   text-align: center;
+  font-size: 16px;
+  line-height: 32px;
+  text-transform: uppercase;
+  border-bottom: 2px solid #79ADDC;
   margin-bottom: 10px;
 }
+.message_intro.message_inbox .message__text h4 {
+  border-bottom-color: #FFC09F;
+}
+.message__do {
+  margin-top: 15px;
+  text-align: right;
+}
+.message__do .btn {
+  margin-left: 15px;
+}
 
-.message__text pre, .message__text code {
+.message__text pre, .message__text code, .message__text p, .message__text h1, .message__text h2, .message__text h3, .message__text h4, .message__text h5, .message__text h6 {
   color: rgba(0, 0, 0, 0.72);
+}
+.message__text pre, .message__text code, .message__text p {
   font-weight: 400;
   font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -945,9 +968,14 @@ body {
   line-height: 24px;
 }
 .message__text h3 {
-  color: rgba(0, 0, 0, 0.72);
   font-weight: 500;
   font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 20px;
+  line-height: 1;
+}
+.message__text h4 {
+  font-weight: 500;
+  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
   line-height: 1;
 }

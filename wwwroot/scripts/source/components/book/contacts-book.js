@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import Contacts from "../contacts/list";
 import {
     selectContact
@@ -7,8 +6,8 @@ import {
 
 const onSelect = (e, contact, selectedContact) => {
     e.preventDefault();
-    if(selectedContact === contact.id) { return; }
-    selectContact(contact);
+    if(selectedContact === contact.contactId) { return; }
+    selectContact(contact.contactId);
 };
 
 const ContactsBook = props => {
@@ -23,10 +22,4 @@ const ContactsBook = props => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        contacts: state.contacts.toArray(),
-        selectedContact: state.messenger.get("contactId")
-    };
-};
-export default connect(mapStateToProps)(ContactsBook);
+export default ContactsBook;

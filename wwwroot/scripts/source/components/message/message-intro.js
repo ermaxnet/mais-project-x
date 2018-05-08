@@ -2,19 +2,45 @@ import React from "react";
 import PropTypes from "prop-types";
 import Message from "../../../../../models/message";
 import { Converter } from "showdown";
+import {
+    cancelRequestOnContact,
+    acceptRequestOnContact
+} from "../../models/contacts";
+
+const onCancel = (e, contactId) => {
+    e.preventDefault();
+    cancelRequestOnContact(contactId);
+};
+
+const onReject = e => {
+    console.log("reject");
+};
+
+const onAgree = (e, contactId) => {
+    e.preventDefault();
+    acceptRequestOnContact(contactId);
+};
 
 const MessageIntro = props => {
     const showdown = new Converter({
-        emoji: true
+        emoji: true,
+        noHeaderId: true
     });
     const message = props.message;
     const textHTML = showdown.makeHtml(props.message.text.trim());
     const messageDo = message.isInbox
         ? (
-            <span>0 - 1</span>
+            <>
+                <button className="btn btn-primary" onClick={e => onAgree(e, message.contactId)}>
+                    Согласиться
+                </button>
+                <button className="btn btn-default" onClick={onReject}>
+                    Отклонить
+                </button>
+            </>
         )
         : (
-            <button className="btn btn-default">
+            <button className="btn btn-default" onClick={e => onCancel(e, message.contactId)}>
                 Отменить
             </button>
         );

@@ -32,6 +32,7 @@ $mais-border-color: #9E9E9E;
 
 $text-color-1: rgba(0, 0, 0, .72);
 $text-color-2: #79ADDC;
+$text-color-3: #FFC09F;
 $text-color-accent: #605F5E;
 
 $contact-selected-fill-color: #79ADDC;
@@ -39,5 +40,8 @@ $messenger-fill-color: transparentize($color: #79ADDC, $amount: .9);
 
 $message-outbox-fill: #D3E2F0;
 $message-inbox-fill: #FAEDE7;
+
+$btn-default-color: #A3A3A3;
+$btn-primary-color: $brand-color;
 
 // 79ADDC 605F5E FFC09F

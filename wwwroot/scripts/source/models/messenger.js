@@ -4,8 +4,8 @@ import { emit } from "../socket";
 import { SOCKET_EVENTS } from "../../../../constants";
 import Message from "../../../../models/message";
 
-export const selectContact = contact => {
-    store.dispatch(MESSENGER_ACTIONS.SELECT_CONTACT(contact));
+export const selectContact = contactId => {
+    store.dispatch(MESSENGER_ACTIONS.SELECT_CONTACT(contactId));
 };
 
 export const emitGetIntoMessages = contactId => {
@@ -15,4 +15,8 @@ export const emitGetIntoMessages = contactId => {
 export const setIntroMessages = messages => {
     messages = messages.map(messageDTO => new Message(messageDTO));
     store.dispatch(MESSENGER_ACTIONS.SET_INTRO_MESSAGES(messages));
+};
+
+export const removeContact = contactId => {
+    store.dispatch(MESSENGER_ACTIONS.REMOVE_CONTACT(contactId));
 };

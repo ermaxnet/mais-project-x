@@ -23,10 +23,14 @@ const encryptMessage = text => {
 };
 
 const decryptMessage = text => {
-    const decipher = crypto.createDecipheriv(
-        CRYPTO_ALGORITHM, CRYPTO_KEY, CRYPTO_IV);
-    text = decipher.update(text, "hex", "utf8") + decipher.final("utf8");
-    return text;
+    try {
+        const decipher = crypto.createDecipheriv(
+            CRYPTO_ALGORITHM, CRYPTO_KEY, CRYPTO_IV);
+        text = decipher.update(text, "hex", "utf8") + decipher.final("utf8");
+        return text;
+    } catch(err) {
+        return text;
+    }
 };
 
 const generateRandomId = hashText => {
@@ -50,6 +54,11 @@ MessageSchema.hook("beforeCreate", message => {
     if(!message.id) {
         message.id = generateRandomId(message.text + message.updatedAt);
     }
+    return Promise.resolve();
+});
+
+MessageSchema.hook("beforeUpdate", message => {
+    message.text = encryptMessage(message.text);
     return Promise.resolve();
 });
 
@@ -106,6 +115,26 @@ const getPersonalizedMessages = (userId, contactId, where = {}) =>
         ? messages.map(messageDTO => toMessage(userId, messageDTO))  
         : []);
 
+const updateMessage = (id, message) => {
+    checkType(message);
+    return MessageSchema.findOne({
+        where: { id },
+        include: associations
+    }).then(messageDTO => {
+        return Promise.all([
+            Promise.resolve(messageDTO.sender),
+            messageDTO.update({
+                text: message.text,
+                isRead: false
+            })
+        ]);
+    }).then(([ sender, messageDTO ]) => {
+        messageDTO.sender = sender;
+        messageDTO.text = message.text;
+        return new Message(messageDTO);
+    });
+};
+
 module.exports = {
     Message,
     MessageAssociations: associations,
@@ -113,6 +142,7 @@ module.exports = {
         add,
         getMessages,
         getPersonalizedMessages,
-        generateRandomId
+        generateRandomId,
+        updateMessage
     }
 };

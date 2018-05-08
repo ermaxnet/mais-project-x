@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Message from "../../../../../models/message";
-import { connect } from "react-redux";
 import MessageRegular from "../message/message-regular";
 import MessageIntro from "../message/message-intro";
 import { MESSAGE_TYPE } from "../../../../../constants";
@@ -33,9 +32,4 @@ MessengerHistory.propTypes = {
     messages: PropTypes.arrayOf(PropTypes.instanceOf(Message)).isRequired,
     type: PropTypes.number.isRequired
 };
-const mapStateToProps = state => {
-    return {
-        messages: state.messenger.get("messages").toJS()
-    };
-};
-export default connect(mapStateToProps)(MessengerHistory);
+export default MessengerHistory;

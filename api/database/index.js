@@ -12,9 +12,12 @@ User.hasOne(Settings, { foreignKey: "id", as: "settings" });
 User.hasOne(MaisToken, { foreignKey: "id", as: "maisToken" });
 User.hasOne(PzkToken, { foreignKey: "id", as: "pzkToken" });
 
+Contact.hasMany(Relation, { onDelete: "CASCADE" });
 Relation.belongsTo(Contact, { foreignKey: "contactId", targetKey: "id", as: "settings" });
 Relation.belongsTo(User, { foreignKey: "userId", targetKey: "id", as: "contact" });
 
+Contact.hasMany(Message, { onDelete: "CASCADE" });
+Message.belongsTo(Contact, { foreignKey: "contactId", targetKey: "id", as: "contact" });
 Message.belongsTo(User, { foreignKey: "senderId", targetKey: "id", as: "sender" });
 
 module.exports = {

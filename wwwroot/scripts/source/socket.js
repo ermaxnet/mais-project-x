@@ -7,7 +7,9 @@ import {
     addUser
 } from "./models/cabinet";
 import {
-    setContactsList
+    setContactsList,
+    cancelRequestOnContactDone,
+    acceptRequestOnContactDone
 } from "./models/contacts";
 import {
     setIntroMessages
@@ -31,6 +33,12 @@ export const connect = done => {
         });
         socket.on(SOCKET_EVENTS["MESSENGER.SET-INTRO-MESSAGES"], messages => {
             setIntroMessages(messages);
+        });
+        socket.on(SOCKET_EVENTS["CONTACTS.CANCEL-REQUEST-ON-CONTACT-DONE"], contactId => {
+            cancelRequestOnContactDone(contactId);
+        });
+        socket.on(SOCKET_EVENTS["CONTACTS.ACCEPT-REQUEST-ON-CONTACT-DONE"], contact => {
+            acceptRequestOnContactDone(contact);
         });
     });
 };

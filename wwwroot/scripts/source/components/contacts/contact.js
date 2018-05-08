@@ -17,7 +17,7 @@ const ContactItem = props => {
             </svg>
         )
         : null;
-    const isSelected = contact.id === props.selectedContact;
+    const isSelected = contact.contactId === props.selectedContact;
     return (
         <li className={`contact${isSelected ? " contact_selected" : ""}`} onClick={props.onClick}>
             <ContactImage className="contact__image" source={image} status={contact.status} alt={contactItem.username} />

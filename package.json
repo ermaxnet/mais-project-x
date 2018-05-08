@@ -14,6 +14,7 @@
     "url": "git+https://github.com/ermaxnet/mais-project-x.git"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.46",
     "autosize": "^4.0.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",

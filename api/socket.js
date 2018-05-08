@@ -10,7 +10,8 @@ const { ContactAPI } = require("./models/contact");
 const { MessageAPI } = require("./models/message");
 const {
     SOCKET_EVENTS,
-    MESSAGE_TYPE
+    MESSAGE_TYPE,
+    CONTACT_STATUSES_COD
 } = require("../constants");
 
 const connect = io => {
@@ -29,6 +30,22 @@ const connect = io => {
                     MessageAPI.getPersonalizedMessages(socket.request.user.id, contactId, { type: MESSAGE_TYPE.INTRO })
                         .then(messages => {
                             socket.emit(SOCKET_EVENTS["MESSENGER.SET-INTRO-MESSAGES"], messages);
+                        });
+                });
+
+                socket.on(SOCKET_EVENTS["CONTACTS.CANCEL-REQUEST-ON-CONTACT"], contactId => {
+                    ContactAPI.deleteContact(contactId)
+                        .then(() => {
+                            socket.emit(SOCKET_EVENTS["CONTACTS.CANCEL-REQUEST-ON-CONTACT-DONE"], contactId);
+                            socket.broadcast.emit(SOCKET_EVENTS["CONTACTS.CANCEL-REQUEST-ON-CONTACT-DONE"], contactId);
+                        });
+                });
+
+                socket.on(SOCKET_EVENTS["CONTACTS.ACCEPT-REQUEST-ON-CONTACT"], contactId => {
+                    ContactAPI.updateContact(contactId, { status: CONTACT_STATUSES_COD.ESTABLISHED }, socket.request.user.id)
+                        .then(contact => {
+                            socket.emit(SOCKET_EVENTS["CONTACTS.ACCEPT-REQUEST-ON-CONTACT-DONE"], contact);
+                            socket.broadcast.emit(SOCKET_EVENTS["CONTACTS.ACCEPT-REQUEST-ON-CONTACT-DONE"], contact);
                         });
                 });
 

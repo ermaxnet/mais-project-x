@@ -17,6 +17,10 @@ import {
 } from "../models/cabinet";
 
 class CabinetPage extends Component {
+    get activeContact() {
+        return this.props.contacts
+            .find(contact => contact.contactId === this.props.selectedContact) || null;
+    }
     componentWillMount() {
         socketConnect(() => {
             this.listContact();
@@ -49,7 +53,7 @@ class CabinetPage extends Component {
                 book = (
                     <section className="book book__contacts">
                         <BookHeader text="Мои контакты" />
-                        <ContactsBook />
+                        <ContactsBook contacts={this.props.contacts.toJS()} selectedContact={this.props.selectedContact} />
                     </section>
                 );
             }
@@ -62,33 +66,29 @@ class CabinetPage extends Component {
                 );
             }
             cabinet = (
-                <>
-                    <div className="cabinet">
-                        <aside className="cabinet__aside">
-                            <CabinetHeader user={this.props.user} />
-                            {this.props.isSearchBook
-                                ? boxSearch
-                                : (
-                                    <ul className="cabinet__menu">
-                                        <MenuItem key="contacts" icon="contact" onClick={this.listContact.bind(this)} isActive={this.props.isContactsBook} />
-                                        <MenuItem key="search" icon="search" onClick={this.boxSearch.bind(this)} />
-                                        <MenuItem key="exit" icon="exit" onClick={this.onExit.bind(this)} className="to-end" />
-                                    </ul>
-                                )
-                            }
-                            {book}
-                        </aside>
-                        <main className="cabinet__content">
-                            <Messenger />
-                        </main>
-                    </div>
-                </>
+                <div className="cabinet">
+                    <aside className="cabinet__aside">
+                        <CabinetHeader user={this.props.user} />
+                        {this.props.isSearchBook
+                            ? boxSearch
+                            : (
+                                <ul className="cabinet__menu">
+                                    <MenuItem key="contacts" icon="contact" onClick={this.listContact.bind(this)} isActive={this.props.isContactsBook} />
+                                    <MenuItem key="search" icon="search" onClick={this.boxSearch.bind(this)} />
+                                    <MenuItem key="exit" icon="exit" onClick={this.onExit.bind(this)} className="to-end" />
+                                </ul>
+                            )
+                        }
+                        {book}
+                    </aside>
+                    <main className="cabinet__content">
+                        <Messenger options={this.props.contact} contact={this.activeContact} />
+                    </main>
+                </div>
             );
         }
         return (
-            <>
-                {cabinet}
-            </>
+            <>{cabinet}</>
         );
     }
 }
@@ -98,7 +98,11 @@ const mapStateToProps = state => {
         user: state.cabinet.get("user"),
         isConnected: state.cabinet.get("isConnected"),
         isContactsBook: state.cabinet.get("isContactsBook"),
-        isSearchBook: state.cabinet.get("isSearchBook")
+        isSearchBook: state.cabinet.get("isSearchBook"),
+        contact: state.messenger.get("activeContact").toJS(),
+        contacts: state.contacts,
+        selectedContact: state.messenger.get("activeContactId"),
+        messenger: state.messenger
     };
 };
 export default connect(mapStateToProps)(CabinetPage);

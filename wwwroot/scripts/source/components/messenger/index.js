@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Screen from "./screen";
 import ContactHeader from "./header";
 import MessageEditor from "./editor";
@@ -7,14 +7,34 @@ import MessengerHistory from "./history";
 import {
     emitGetIntoMessages
 } from "../../models/messenger";
+import {
+    CONTACT_STATUSES_COD,
+    MESSAGE_TYPE
+} from "../../../../../constants";
+import Contact from "../../../../../models/contact";
 
 class Messenger extends Component {
-    componentWillMount() {
-        emitGetIntoMessages(1);
+    static propTypes = {
+        options: PropTypes.object.isRequired,
+        contact: PropTypes.instanceOf(Contact)
+    }
+    componentWillReceiveProps({ contact, options }) {
+        if((contact && this.props.contact && this.props.contact.id === contact.id) 
+            || (options && (!options.id || options.messagesWasLoaded))) 
+        {
+            return;
+        }
+        emitGetIntoMessages(contact.contactId);
+    }
+    get messages() {
+        return this.props.options.messages;
+    }
+    get isDone() {
+        return this.props.options.messagesWasLoaded;
     }
     render() {
         const contact = this.props.contact;
-        /* if(!contact) {
+        if(!contact) {
             return (
                 <Screen className="screen_welcome">
                     <span>Добро пожаловать в Mais Messenger</span>
@@ -25,26 +45,26 @@ class Messenger extends Component {
                     </span>
                 </Screen>
             );
-        } */
+        }
+        let body = null;
+        if(this.isDone) {
+            switch(contact.settings.status) {
+                case CONTACT_STATUSES_COD.CREATED:
+                    body = (
+                        <MessengerHistory type={MESSAGE_TYPE.INTRO} messages={this.messages} />
+                    );
+                    break;
+            }
+        } else {
+            body = <span>Loading...</span>;
+        }
         return (
             <div className="messenger">
-                {/*  */}
-                {/* <ContactHeader contact={contact} /> */}
-                <header className={`contact-header status-connected`}>
-                    <div className="contact__title">
-                        <span>Екатерина Ерёмина</span>
-                        <span className="contact__status"></span>
-                    </div>
-                </header>
-                <MessengerHistory type={6002} />
+                <ContactHeader contact={contact} />
+                {body}
             </div>
         );
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        contact: state.messenger.get("contact")
-    };
-};
-export default connect(mapStateToProps)(Messenger);
+export default Messenger;
