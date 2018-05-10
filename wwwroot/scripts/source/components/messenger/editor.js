@@ -1,15 +1,27 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import showdown from "showdown";
 import autosize from "autosize";
+import { MESSENGER_DO_TYPES } from "../../../../../constants";
+import {
+    sendRequestOnContact
+} from "../../models/contacts";
 
 class MessageEditor extends Component {
+    static propTypes = {
+        systemMessage: PropTypes.string,
+        doType: PropTypes.number
+    }
+    static defaultValues = {
+        doType: MESSENGER_DO_TYPES.NONE
+    }
     constructor(props) {
         super(props);
         this.converter = new showdown.Converter({
             emoji: true
         });
         this.state = {
-            text: "",
+            text: this.props.systemMessage || "",
             textHTML: ""
         };
     }
@@ -20,6 +32,9 @@ class MessageEditor extends Component {
         };
         this.options.textareaHeightLimit = Math.ceil(0.4905 * this.options.editorHeight);
         this.options.controlsHeight = this.options.editorHeight - this.options.textareaHeightLimit;
+        if(this.controls) {
+            this.controls.style.height = `${this.options.controlsHeight - 30}px`;
+        }
         this.textareaAutosize();
     }
     textareaAutosize() {
@@ -57,23 +72,40 @@ class MessageEditor extends Component {
         value = escape(value);
         return unescape(value.replace(/%0A/g, "  %0A"));
     }
+    doSendRequestOnContact(e) {
+        e.preventDefault();
+        sendRequestOnContact(this.state.text);
+        this.setState({
+            text: "",
+            textHTML: ""
+        });
+    }
     render() {
+        let messengerDo = null;
+        switch(this.props.doType) {
+            case MESSENGER_DO_TYPES["SEND-CONTAT-REQUEST"]:
+                messengerDo = (
+                    <div className="messenger__do" ref={ref => this.controls = ref}>
+                        <button className="btn btn-primary" onClick={this.doSendRequestOnContact.bind(this)}>Отправить</button>
+                    </div>
+                );
+                break;
+        }
         return (
             <div 
                 className="messenger__editor"
                 ref={ref => this.editor = ref}
             >
-                <div className="phantom-preview" dangerouslySetInnerHTML={{ __html: this.state.textHTML }}></div>
                 <textarea 
-                        className="messenger__editor-textarea"
-                        name="message" 
-                        id="message" 
-                        value={this.state.text} 
-                        onChange={this.onChange.bind(this)}
-                        placeholder="Введите сообщение..."
-                        ref={ref => this.textarea = ref}
-                    >
-                </textarea>
+                    className="messenger__editor-textarea"
+                    name="message" 
+                    id="message" 
+                    value={this.state.text} 
+                    onChange={this.onChange.bind(this)}
+                    placeholder="Введите сообщение..."
+                    ref={ref => this.textarea = ref}
+                ></textarea>
+                {messengerDo}
             </div>
         );
     }

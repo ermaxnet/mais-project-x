@@ -37,19 +37,21 @@ export const CONTACTS_ACTIONS = {
             contactId
         };
     },
-    CHANGE_STATUS(status) {
+    CHANGE_STATUS(contactId, status) {
         return {
-            type: REDUX_ACTIONS["CHANGE-STATUS"],
-            contact
+            type: REDUX_ACTIONS["CONTACTS.CHANGE-STATUS"],
+            contactId,
+            status
         };
     }
 };
 
 export const MESSENGER_ACTIONS = {
-    SELECT_CONTACT(contactId) {
+    SELECT_CONTACT(contactId, contactStatus) {
         return {
             type: REDUX_ACTIONS["MESSENGER.SELECT-CONTACT"],
-            contactId
+            contactId,
+            contactStatus
         };
     },
     SET_INTRO_MESSAGES(messages) {
@@ -68,6 +70,26 @@ export const MESSENGER_ACTIONS = {
         return {
             type: REDUX_ACTIONS["MESSENGER.ACCEPT-CONTACT"],
             contact
+        };
+    },
+    CLEAR() {
+        return {
+            type: REDUX_ACTIONS["MESSENGER.CLEAR"]
+        };
+    }
+};
+
+export const CONTACTS_SEARCH_ACTIONS = {
+    CHANGE_KEY(key) {
+        return {
+            type: REDUX_ACTIONS["CONTACTS-SEARCH.CHANGE-KEY"],
+            key
+        };
+    },
+    SET_CONTACTS_LIST(contactsIds) {
+        return {
+            type: REDUX_ACTIONS["CONTACTS-SEARCH.SET-LIST"],
+            contactsIds
         };
     }
 };

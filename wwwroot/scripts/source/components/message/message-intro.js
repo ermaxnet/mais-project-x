@@ -4,7 +4,8 @@ import Message from "../../../../../models/message";
 import { Converter } from "showdown";
 import {
     cancelRequestOnContact,
-    acceptRequestOnContact
+    acceptRequestOnContact,
+    rejectRequestOnContact
 } from "../../models/contacts";
 
 const onCancel = (e, contactId) => {
@@ -12,8 +13,9 @@ const onCancel = (e, contactId) => {
     cancelRequestOnContact(contactId);
 };
 
-const onReject = e => {
-    console.log("reject");
+const onReject = (e, contactId) => {
+    e.preventDefault();
+    rejectRequestOnContact(contactId);
 };
 
 const onAgree = (e, contactId) => {
@@ -34,7 +36,7 @@ const MessageIntro = props => {
                 <button className="btn btn-primary" onClick={e => onAgree(e, message.contactId)}>
                     Согласиться
                 </button>
-                <button className="btn btn-default" onClick={onReject}>
+                <button className="btn btn-default" onClick={e => onReject(e, message.contactId)}>
                     Отклонить
                 </button>
             </>

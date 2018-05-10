@@ -10,6 +10,10 @@ const {
     UserAPI 
 } = require("./user");
 const Op = require("sequelize").Op;
+const {
+    CONTACT_TYPES_COD,
+    CONTACT_STATUSES_COD
+} = require("../../constants");
 
 const associations = [
     {
@@ -38,6 +42,7 @@ const add = contact => checkToken(contact)
             secureToken = `${contact.me}-${contact.userId}`;
         }
         const build = ContactSchema.build({
+            id: contact.id,
             type: contact.settings.type,
             status: contact.settings.status,
             secureToken
@@ -117,6 +122,21 @@ const updateContact = (contactId, contact, userId) =>
         }))
         .then(contactDTO => contactDTO ? new Contact(contactDTO) : null);
 
+const findContacts = (userId, where) => 
+    UserAPI.find.all(where)
+        .then(users => users.map(user => new Contact({
+            me: userId,
+            name: user.displayName,
+            isCreator: true,
+            settings: {
+                type: CONTACT_TYPES_COD.DIALOG,
+                status: CONTACT_STATUSES_COD.FINDED,
+                secureToken: `${userId}-${user.id}`,
+                reverseSecureToken: `${user.id}-${userId}`
+            },
+            contact: user
+        })));
+
 module.exports = {
     Contact,
     ContactAssociations: associations,
@@ -125,6 +145,7 @@ module.exports = {
         checkToken,
         getContacts,
         deleteContact,
-        updateContact
+        updateContact,
+        findContacts
     }
 };

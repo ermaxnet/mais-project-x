@@ -694,6 +694,10 @@ body {
   padding: 0 30px;
   display: flex;
   cursor: pointer;
+  margin-bottom: 15px;
+}
+.contact:last-of-type {
+  margin-bottom: 0;
 }
 .contact_selected::before {
   position: absolute;
@@ -870,6 +874,10 @@ body {
   font-size: 18px;
   line-height: 24px;
 }
+.messenger__editor .messenger__do {
+  padding-top: 20px;
+  text-align: right;
+}
 
 .messenger__history {
   display: flex;
@@ -881,6 +889,15 @@ body {
   position: relative;
   display: block;
   padding: 0 72px 0 30px;
+}
+.message__system-label {
+  position: absolute;
+  font-weight: 300;
+  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 12px;
+  bottom: 10px;
+  right: 10px;
 }
 .message__text {
   position: relative;
@@ -934,6 +951,9 @@ body {
   left: -7px;
   background-color: #FAEDE7;
 }
+.message_system .message__text {
+  padding-bottom: 25px;
+}
 .message_intro .message__text {
   text-align: left;
 }
@@ -978,4 +998,11 @@ body {
   font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   line-height: 1;
+}
+.message__text img {
+  display: inline-block;
+  margin: 10px 20px 0 0;
+  border: 10px solid white;
+  width: 200px;
+  height: 170px;
 }

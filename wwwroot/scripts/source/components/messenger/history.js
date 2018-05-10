@@ -16,6 +16,7 @@ const MessengerHistory = props => {
                 list = <MessageIntro message={messages[0]} />;
                 break;
             case MESSAGE_TYPE.REGULAR:
+            case MESSAGE_TYPE.SYSTEM:
                 list = messages.map(message => 
                     <MessageRegular key={message.id} message={message} />);
                 break;

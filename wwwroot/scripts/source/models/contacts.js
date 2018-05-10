@@ -1,11 +1,18 @@
-import { CONTACTS_ACTIONS } from "../redux/actions";
+import { 
+    CONTACTS_ACTIONS, 
+    CONTACTS_SEARCH_ACTIONS 
+} from "../redux/actions";
 import store from "../redux/store";
 import Contact from "../../../../models/contact";
 import {
-    removeContact as removeContactMessenger
+    removeContact as removeContactMessenger,
+    clearMessenger
 } from "./messenger";
 import { emit } from "../socket";
-import { SOCKET_EVENTS } from "../../../../constants";
+import { 
+    SOCKET_EVENTS,
+    CONTACT_STATUSES_COD
+} from "../../../../constants";
 
 export const setContactsList = contacts => {
     if(!contacts || !contacts.length) { return; }
@@ -25,18 +32,74 @@ export const cancelRequestOnContactDone = contactId => {
     removeContactMessenger(contactId);
 };
 
+export const rejectRequestOnContact = contactId => {
+    emit(SOCKET_EVENTS["CONTACTS.REJECT-REQUEST-ON-CONTACT"], contactId);
+};
+
+export const rejectRequestOnContactDone = contactId => {
+    removeContact(contactId);
+    removeContactMessenger(contactId);
+};
+
 export const acceptRequestOnContact = contactId => {
     emit(SOCKET_EVENTS["CONTACTS.ACCEPT-REQUEST-ON-CONTACT"], contactId);
 };
 
 export const acceptRequestOnContactDone = contact => {
-    changeContactStatus(contact.settings.status);
+    changeContactStatus(contact.contactId, contact.settings.status);
 };
 
 export const removeContact = contactId => {
     store.dispatch(CONTACTS_ACTIONS.REMOVE_CONTACT(contactId));
 };
 
-export const changeContactStatus = status => {
-    store.dispatch(CHANGE_STATUS.CHANGE_STATUS(status));
+export const changeContactStatus = (contactId, status) => {
+    store.dispatch(CONTACTS_ACTIONS.CHANGE_STATUS(contactId, status));
+};
+
+export const changeContactsKey = key => {
+    store.dispatch(CONTACTS_SEARCH_ACTIONS.CHANGE_KEY(key));
+};
+
+export const findContacts = key => {
+    emit(SOCKET_EVENTS["CONTACTS-SEARCH.START"], key);
+};
+
+export const findContactsDone = contacts => {
+    let contactsBook = store.getState().contacts
+        .filter(contact => contact.settings.status !== CONTACT_STATUSES_COD.FINDED);
+    const maxContact = Math.max.apply(null, contactsBook.map(contact => contact.contactId).toJS());
+    const maxContactId = Math.max.apply(null, contactsBook.map(contact => contact.id).toJS());
+    const contactsIds = [];
+    contacts.forEach((newContact, index) => {
+        const contact = contactsBook
+            .findLast(contact => contact.settings.secureToken === newContact.settings.secureToken
+                || contact.settings.secureToken === newContact.settings.reverseSecureToken);
+        if(contact) {
+            return contactsIds.push(contact.contactId);
+        }
+        newContact.contactId = maxContact + 1 + index;
+        newContact.id = maxContactId + 2 + index;
+        newContact.settings.id = newContact.contactId;
+        contactsBook = contactsBook.push(new Contact({
+            ...newContact,
+            contact: newContact.item
+        }));
+        contactsIds.push(newContact.contactId);
+    });
+    clearMessenger();
+    store.dispatch(CONTACTS_ACTIONS.SET_CONTACTS_LIST(contactsBook.toJS()));
+    store.dispatch(CONTACTS_SEARCH_ACTIONS.SET_CONTACTS_LIST(contactsIds));
+};
+
+export const sendRequestOnContact = messageText => {
+    const state = store.getState();
+    const activeContactId = state.messenger.get("activeContactId");
+    const contact = state.contacts.findLast(contact => contact.contactId === activeContactId);
+    emit(SOCKET_EVENTS["CONTACTS.SEND-REQUEST-ON-CONTACT"], contact, messageText);
+    clearMessenger();
+};
+
+export const sendRequestOnContactDone = contact => {
+    console.log(contact);
 };

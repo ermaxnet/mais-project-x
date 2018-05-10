@@ -67,6 +67,10 @@ class Contact {
                 return "Этот контакт заблокирован";
             case CONTACT_STATUSES_COD.ESTABLISHED:
                 return this.message;
+            case CONTACT_STATUSES_COD.FINDED:
+                return `
+                    Вы нашли этот контакт на просторах нашего оазиса. Немедленно отправьте
+                    ему запрос на добавление в друзья или забудте о нем навсегда`;
             default:
                 return null;
         }

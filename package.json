@@ -22,7 +22,7 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
-    "immutable": "^3.8.2",
+    "immutable": "^4.0.0-rc.9",
     "js-cookie": "^2.2.0",
     "jsonwebtoken": "^8.2.1",
     "moment": "^2.22.1",

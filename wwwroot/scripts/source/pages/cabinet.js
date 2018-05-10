@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Cookie from "js-cookie";
 import {
-    COOKIE
+    COOKIE,
+    CONTACT_STATUSES_COD
 } from "../../../../constants";
 import { connect as socketConnect } from "../socket";
 import { connect } from "react-redux";
@@ -15,11 +16,24 @@ import {
     showContactsBook,
     showSearchBook
 } from "../models/cabinet";
+import {
+    changeContactsKey,
+    findContacts,
+    findContactsDone
+} from "../models/contacts";
 
 class CabinetPage extends Component {
     get activeContact() {
         return this.props.contacts
             .find(contact => contact.contactId === this.props.selectedContact) || null;
+    }
+    get contacts() {
+        return this.props.contacts
+            .filter(contact => contact.settings.status !== CONTACT_STATUSES_COD.FINDED).toJS();
+    }
+    get findedContacts() {
+        return this.props.contacts
+            .filter(contact => ~this.props.findedContacts.indexOf(contact.contactId)).toJS();
     }
     componentWillMount() {
         socketConnect(() => {
@@ -33,6 +47,16 @@ class CabinetPage extends Component {
     }
     onBack(e) {
         this.listContact(e);
+    }
+    onFindContacts(e) {
+        const value = e.target.value;
+        changeContactsKey(value);
+        if(value && value.length > 3) {
+            findContacts(value);
+        }
+        if(!value || value.length <= 3) {
+            findContactsDone([]);
+        }
     }
     listContact(e) {
         if(e) { e.preventDefault() };
@@ -53,15 +77,20 @@ class CabinetPage extends Component {
                 book = (
                     <section className="book book__contacts">
                         <BookHeader text="Мои контакты" />
-                        <ContactsBook contacts={this.props.contacts.toJS()} selectedContact={this.props.selectedContact} />
+                        <ContactsBook contacts={this.contacts} selectedContact={this.props.selectedContact} />
                     </section>
                 );
             }
             if(this.props.isSearchBook) {
-                boxSearch = <SearchBox onBack={this.onBack.bind(this)} />;
+                boxSearch = <SearchBox 
+                    onBack={this.onBack.bind(this)} 
+                    onFindContacts={this.onFindContacts.bind(this)} 
+                    contactsKey={this.props.contactsKey}
+                />;
                 book = (
                     <section className="book book__search">
                         <BookHeader text="Результаты поиска" />
+                        <ContactsBook contacts={this.findedContacts} selectedContact={this.props.selectedContact} />
                     </section>
                 );
             }
@@ -102,7 +131,9 @@ const mapStateToProps = state => {
         contact: state.messenger.get("activeContact").toJS(),
         contacts: state.contacts,
         selectedContact: state.messenger.get("activeContactId"),
-        messenger: state.messenger
+        messenger: state.messenger,
+        contactsKey: state.findedContacts.get("key"),
+        findedContacts: state.findedContacts.get("contacts").toJS()
     };
 };
 export default connect(mapStateToProps)(CabinetPage);

@@ -138,6 +138,13 @@ const byToken = token =>
     .then(userDTO => 
         userDTO ? new User(userDTO) : null);
 
+const all = where => 
+    UserSchema.findAll({
+        where: where,
+        include: associations
+    }).then(users => users 
+        ? users.map(userDTO => new User(userDTO)) : []);
+
 const update = (userId, user) => {
     return UserSchema.findById(userId)
         .then(userDTO => {
@@ -195,7 +202,8 @@ module.exports = {
         find: {
             byId,
             where,
-            byToken
+            byToken,
+            all
         },
         update,
         updatePZKToken,

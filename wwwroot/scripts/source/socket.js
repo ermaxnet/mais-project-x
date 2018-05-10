@@ -9,7 +9,10 @@ import {
 import {
     setContactsList,
     cancelRequestOnContactDone,
-    acceptRequestOnContactDone
+    acceptRequestOnContactDone,
+    rejectRequestOnContactDone,
+    findContactsDone,
+    sendRequestOnContactDone
 } from "./models/contacts";
 import {
     setIntroMessages
@@ -39,6 +42,15 @@ export const connect = done => {
         });
         socket.on(SOCKET_EVENTS["CONTACTS.ACCEPT-REQUEST-ON-CONTACT-DONE"], contact => {
             acceptRequestOnContactDone(contact);
+        });
+        socket.on(SOCKET_EVENTS["CONTACTS.REJECT-REQUEST-ON-CONTACT-DONE"], contact => {
+            rejectRequestOnContactDone(contact);
+        });
+        socket.on(SOCKET_EVENTS["CONTACTS-SEARCH.DONE"], contacts => {
+            findContactsDone(contacts);
+        });
+        socket.on(SOCKET_EVENTS["CONTACTS.SEND-REQUEST-ON-CONTACT-DONE"], contact => {
+            sendRequestOnContactDone(contact);
         });
     });
 };

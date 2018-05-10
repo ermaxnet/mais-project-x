@@ -8,6 +8,15 @@ export default (state = List(), action) => {
         case REDUX_ACTIONS["CONTACTS.REMOVE-CONTACT"]: {
             return state.filter(item => item.contactId !== action.contactId);
         }
+        case REDUX_ACTIONS["CONTACTS.CHANGE-STATUS"]: {
+            state = state.map(contact => {
+                if(contact.contactId === action.contactId) {
+                    contact.settings.status = action.status;
+                }
+                return contact;
+            });
+            return state;
+        }
     }
     return state;
 };

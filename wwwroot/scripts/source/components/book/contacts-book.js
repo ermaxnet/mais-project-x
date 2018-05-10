@@ -7,7 +7,7 @@ import {
 const onSelect = (e, contact, selectedContact) => {
     e.preventDefault();
     if(selectedContact === contact.contactId) { return; }
-    selectContact(contact.contactId);
+    selectContact(contact.contactId, contact.settings.status);
 };
 
 const ContactsBook = props => {

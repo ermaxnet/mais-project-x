@@ -14,7 +14,14 @@ const SearchBox = props => {
             <button type="button" className="button-back" onClick={props.onBack}>
                 <svg className="icon" dangerouslySetInnerHTML={{ __html: svgIcon("back") }}></svg>
             </button>
-            <input className="search-box__input" type="text" name="query" id="query" />
+            <input 
+                className="search-box__input" 
+                type="text" 
+                name="contactsKey" 
+                id="contactsKey"
+                value={props.contactsKey} 
+                onChange={props.onFindContacts}
+            />
             <button type="submit" className="button-go" onClick={onSearch}>
                 <svg className="icon" dangerouslySetInnerHTML={{ __html: svgIcon("search") }}></svg>
             </button>
@@ -23,7 +30,9 @@ const SearchBox = props => {
 };
 
 SearchBox.propTypes = {
-    onBack: PropTypes.func.isRequired
+    onBack: PropTypes.func.isRequired,
+    onFindContacts: PropTypes.func.isRequired,
+    contactsKey: PropTypes.string.isRequired
 };
 
 export default SearchBox;
