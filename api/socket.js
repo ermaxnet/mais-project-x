@@ -40,6 +40,13 @@ const connect = io => {
                         });
                 });
 
+                socket.on(SOCKET_EVENTS["MESSENGER.GET-MESSAGES"], contactId => {
+                    MessageAPI.getPersonalizedMessages(socket.request.user.id, contactId, { type: MESSAGE_TYPE.REGULAR })
+                        .then(messages => {
+                            socket.emit(SOCKET_EVENTS["MESSENGER.SET-MESSAGES"], messages);
+                        });
+                });
+
                 socket.on(SOCKET_EVENTS["CONTACTS.CANCEL-REQUEST-ON-CONTACT"], contactId => {
                     ContactAPI.deleteContact(contactId)
                         .then(() => {
@@ -105,7 +112,45 @@ const connect = io => {
                         })
                         .then(([ message, contact ]) => {
                             socket.emit(SOCKET_EVENTS["CONTACTS.SEND-REQUEST-ON-CONTACT-DONE"], contact);
-                            socket.broadcast.emit(SOCKET_EVENTS["CONTACTS.SEND-NEW-CONTACT"], contact);
+                            return Promise.all([
+                                UserAPI.getMaisTokens(contact.userId),
+                                ContactAPI.getContactForUser(contact.userId, contact.contactId)
+                            ]);
+                        }).then(([ tokens, contact ]) => {
+                            if(tokens[contact.me]) {
+                                socket.broadcast.to(tokens[contact.me]).emit(SOCKET_EVENTS["CONTACTS.SEND-NEW-CONTACT"], contact);
+                            }
+                        });
+                });
+
+                socket.on(SOCKET_EVENTS["MESSENGER.SEND-MESSAGE"], (contact, messageText, messageDate) => {
+                    const myMessage = new Message({
+                        contactId: contact.contactId,
+                        updatedAt: messageDate,
+                        text: messageText,
+                        sender: socket.request.user,
+                        receiverId: contact.userId,
+                        type: MESSAGE_TYPE.REGULAR
+                    });
+                    myMessage.id = MessageAPI.generateRandomId(myMessage.messageHash);
+                    socket.emit(SOCKET_EVENTS["MESSENGER.NEW-MESSAGE-FOR-CONTACT"], myMessage);
+                    MessageAPI.add(myMessage)
+                        .then(() => {
+                            return UserAPI.getMaisTokens(myMessage.receiverId);
+                        })
+                        .then(tokens => {
+                            if(!tokens[myMessage.receiverId]) {
+                                return Promise.resolve([ null ]);
+                            }
+                            return Promise.all([
+                                MessageAPI.getPersonalizedMessage(myMessage.receiverId, myMessage.id),
+                                Promise.resolve(tokens[myMessage.receiverId])
+                            ]);
+                        })
+                        .then(([ message, token ]) => {
+                            if(message) {
+                                socket.broadcast.to(token).emit(SOCKET_EVENTS["MESSENGER.NEW-MESSAGE-FOR-CONTACT"], message);
+                            }
                         });
                 });
 

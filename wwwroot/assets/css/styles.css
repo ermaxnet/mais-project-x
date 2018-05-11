@@ -861,6 +861,9 @@ body {
   border-top: 1px solid #ccc;
   background-color: rgba(121, 173, 220, 0.1);
 }
+.messenger__editor_basic .messenger__active-group {
+  padding-right: 68px;
+}
 .messenger__editor-textarea {
   display: block;
   width: 100%;
@@ -878,17 +881,66 @@ body {
   padding-top: 20px;
   text-align: right;
 }
+.messenger__editor .message-send {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  right: 0;
+  bottom: 0;
+  border: none;
+  background-color: transparent;
+  padding: 4px;
+  cursor: pointer;
+}
+.messenger__editor .message-send svg {
+  width: 40px;
+  height: 40px;
+  fill: #605F5E;
+}
+.messenger__editor .messenger__active-group {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
 
 .messenger__history {
   display: flex;
-  flex-flow: column-reverse;
+  flex-flow: column;
   padding: 30px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.messenger__history .messages__group {
+  position: relative;
+  padding-top: 30px;
+  margin-bottom: 20px;
+}
+.messenger__history .messages__group:last-of-type {
+  margin-bottom: 0;
+}
+.messenger__history .messages__group .messages__group-name {
+  position: absolute;
+  display: block;
+  width: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background-color: transparent;
+  color: #79ADDC;
+  font-weight: 700;
+  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 30px;
 }
 
 .message {
   position: relative;
   display: block;
   padding: 0 72px 0 30px;
+  margin-bottom: 15px;
+}
+.message:last-child {
+  margin-bottom: 0;
 }
 .message__system-label {
   position: absolute;
@@ -1005,4 +1057,7 @@ body {
   border: 10px solid white;
   width: 200px;
   height: 170px;
+}
+.message__text i, .message__text em {
+  font-style: italic;
 }

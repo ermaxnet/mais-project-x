@@ -6,13 +6,17 @@ import store from "../redux/store";
 import Contact from "../../../../models/contact";
 import {
     removeContact as removeContactMessenger,
-    clearMessenger
+    clearMessenger,
+    selectContact
 } from "./messenger";
 import { emit } from "../socket";
 import { 
     SOCKET_EVENTS,
     CONTACT_STATUSES_COD
 } from "../../../../constants";
+import {
+    showContactsBook
+} from "./cabinet";
 
 export const setContactsList = contacts => {
     if(!contacts || !contacts.length) { return; }
@@ -101,5 +105,24 @@ export const sendRequestOnContact = messageText => {
 };
 
 export const sendRequestOnContactDone = contact => {
-    console.log(contact);
+    contact = new Contact({
+        ...contact,
+        contact: contact.item
+    });
+    clearSearch();
+    store.dispatch(CONTACTS_ACTIONS.UPDATE_CONTACT(contact));
+    showContactsBook();
+    selectContact(contact.contactId, contact.settings.status);
+};
+
+export const clearSearch = () => {
+    store.dispatch(CONTACTS_SEARCH_ACTIONS.CLEAR_SEARCH());
+};
+
+export const pushContactToContactsBook = (contact, isSelect = false) => {
+    contact = new Contact({
+        ...contact,
+        contact: contact.item
+    });
+    store.dispatch(CONTACTS_ACTIONS.PUSH_CONTACT(contact));
 };

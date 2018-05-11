@@ -1,6 +1,9 @@
 import { CABINET_ACTIONS } from "../redux/actions";
 import store from "../redux/store";
 import User from "../../../../models/user";
+import {
+    clearMessenger
+} from "./messenger";
 
 export const addUser = userDTO => {
     const user = new User(userDTO);
@@ -9,10 +12,13 @@ export const addUser = userDTO => {
 };
 
 export const showContactsBook = () => {
+    // todo Не знаю, надо ли чистить при переходах. Может и не надо
+    /* clearMessenger(); */
     store.dispatch(CABINET_ACTIONS.SHOW_CONTACTS_BOOK());
 };
 
 export const showSearchBook = () => {
+    /* clearMessenger(); */
     store.dispatch(CABINET_ACTIONS.SHOW_SEARCH_BOOK());
 };
 

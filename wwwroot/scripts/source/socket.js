@@ -12,10 +12,13 @@ import {
     acceptRequestOnContactDone,
     rejectRequestOnContactDone,
     findContactsDone,
-    sendRequestOnContactDone
+    sendRequestOnContactDone,
+    pushContactToContactsBook
 } from "./models/contacts";
 import {
-    setIntroMessages
+    setIntroMessages,
+    getMessagesForContactDone,
+    addMessageToContact
 } from "./models/messenger";
 
 const socket = io(SOCKET, {
@@ -51,6 +54,15 @@ export const connect = done => {
         });
         socket.on(SOCKET_EVENTS["CONTACTS.SEND-REQUEST-ON-CONTACT-DONE"], contact => {
             sendRequestOnContactDone(contact);
+        });
+        socket.on(SOCKET_EVENTS["CONTACTS.SEND-NEW-CONTACT"], contact => {
+            pushContactToContactsBook(contact);
+        });
+        socket.on(SOCKET_EVENTS["MESSENGER.SET-MESSAGES"], messages => {
+            getMessagesForContactDone(messages);
+        });
+        socket.on(SOCKET_EVENTS["MESSENGER.NEW-MESSAGE-FOR-CONTACT"], message => {
+            addMessageToContact(message);
         });
     });
 };

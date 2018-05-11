@@ -17,6 +17,20 @@ export default (state = List(), action) => {
             });
             return state;
         }
+        case REDUX_ACTIONS["CONTACTS.UPDATE-CONTACT"]: {
+            const updatedContact = action.contact;
+            state = state.map(contact => {
+                if(contact.settings.secureToken === updatedContact.settings.secureToken) {
+                    return updatedContact;
+                }
+                return contact;
+            });
+            return state;
+        }
+        case REDUX_ACTIONS["CONTACTS.PUSH-CONTACT"]: {
+            state = state.push(action.contact);
+            return state;
+        }
     }
     return state;
 };

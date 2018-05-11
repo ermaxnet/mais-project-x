@@ -43,6 +43,18 @@ export const CONTACTS_ACTIONS = {
             contactId,
             status
         };
+    },
+    UPDATE_CONTACT(contact) {
+        return {
+            type: REDUX_ACTIONS["CONTACTS.UPDATE-CONTACT"],
+            contact
+        };
+    },
+    PUSH_CONTACT(contact) {
+        return {
+            type: REDUX_ACTIONS["CONTACTS.PUSH-CONTACT"],
+            contact
+        };
     }
 };
 
@@ -76,6 +88,18 @@ export const MESSENGER_ACTIONS = {
         return {
             type: REDUX_ACTIONS["MESSENGER.CLEAR"]
         };
+    },
+    SET_MESSAGES(messages) {
+        return {
+            type: REDUX_ACTIONS["MESSENGER.SET-MESSAGES"],
+            messages
+        };
+    },
+    ADD_MESSAGE_TO_CONTACT(message) {
+        return {
+            type: REDUX_ACTIONS["MESSENGER.ADD-MESSAGE-TO-CONTACT"],
+            message
+        };
     }
 };
 
@@ -90,6 +114,11 @@ export const CONTACTS_SEARCH_ACTIONS = {
         return {
             type: REDUX_ACTIONS["CONTACTS-SEARCH.SET-LIST"],
             contactsIds
+        };
+    },
+    CLEAR_SEARCH() {
+        return {
+            type: REDUX_ACTIONS["CONTACTS-SEARCH.CLEAR"]
         };
     }
 };

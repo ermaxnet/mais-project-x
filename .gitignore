@@ -2,4 +2,4 @@ node_modules
 api/settings.json
 wwwroot/server/settings.json
 .sass-cache
-api/test.js
+api/test

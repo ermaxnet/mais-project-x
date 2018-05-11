@@ -1,26 +1,66 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Message from "../../../../../models/message";
-import MessageRegular from "../message/message-regular";
+import MessagesByTime from "../message/messages-on-time";
 import MessageIntro from "../message/message-intro";
 import { MESSAGE_TYPE } from "../../../../../constants";
+import { OrderedMap } from "immutable";
 
 const MessengerHistory = props => {
-    const messages = props.messages;
+    let messages = props.messages;
     let list = null;
-    if(messages.length === 0) {
+    if(messages.size === 0) {
         list = <span>Ваша история переписки с этим контактом пуста. Срочно напишите здесь о погоде!</span>;
     } else {
-        switch(props.type) {
+        list = messages.map((messagesList, groupName, index) => {
+            let items = null;
+            switch(props.type) {
+                case MESSAGE_TYPE.INTRO: {
+                    items = <MessageIntro message={messagesList.get(0)} />
+                    break;
+                }
+                case MESSAGE_TYPE.REGULAR:
+                case MESSAGE_TYPE.SYSTEM: {
+                    const timeGroups = messagesList.groupBy(message => {
+                        return `${message.updatedAt.format("HH:mm")}|${message.isInbox}|${message.type}`;
+                    });
+                    items = timeGroups.map((timesMessagesList, options, index) => {
+                        const [
+                            time,
+                            isInbox,
+                            type
+                        ] = options.split("|");
+                        return (
+                            <MessagesByTime 
+                                key={groupName + options} 
+                                messages={timesMessagesList} 
+                                date={groupName}
+                                time={time} 
+                                isInbox={isInbox === "true"}
+                                type={+type}
+                            />
+                        );
+                    }).toList();
+                    break;
+                }
+            }
+            return (
+                <div className="messages__group" key={index + groupName}>
+                    <mark className="messages__group-name">{groupName}</mark>
+                    {items}
+                </div>
+            );
+        }).toList();
+        /* switch(props.type) {
             case MESSAGE_TYPE.INTRO:
+                //const introMessage = messages.first();
                 list = <MessageIntro message={messages[0]} />;
                 break;
-            case MESSAGE_TYPE.REGULAR:
+            /* case MESSAGE_TYPE.REGULAR:
             case MESSAGE_TYPE.SYSTEM:
                 list = messages.map(message => 
-                    <MessageRegular key={message.id} message={message} />);
-                break;
-        }
+                    );
+                break; 
+        } */
     }
     return (
         <div className="messenger__history">
@@ -30,7 +70,7 @@ const MessengerHistory = props => {
 };
 
 MessengerHistory.propTypes = {
-    messages: PropTypes.arrayOf(PropTypes.instanceOf(Message)).isRequired,
+    messages: PropTypes.instanceOf(OrderedMap).isRequired,
     type: PropTypes.number.isRequired
 };
 export default MessengerHistory;

@@ -137,6 +137,15 @@ const findContacts = (userId, where) =>
             contact: user
         })));
 
+const getContactForUser = (userId, contactId) => 
+    RelationSchema.findOne({
+        where: {
+            me: userId,
+            contactId
+        },
+        include: associations
+    }).then(contactDTO => contactDTO ? new Contact(contactDTO) : null);
+
 module.exports = {
     Contact,
     ContactAssociations: associations,
@@ -146,6 +155,7 @@ module.exports = {
         getContacts,
         deleteContact,
         updateContact,
-        findContacts
+        findContacts,
+        getContactForUser
     }
 };

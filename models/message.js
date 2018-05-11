@@ -29,6 +29,9 @@ class Message {
     get senderId() {
         return this.sender ? this.sender.id : null;
     }
+    get messageHash() {
+        return this.text + this.updatedAt;
+    }
     setSender(senderId, sender) {
         if(sender === null) {
             return this.sender = new User({ id: senderId });

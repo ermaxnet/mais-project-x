@@ -192,6 +192,18 @@ const disconnect = (userId, hasToken = false) => {
     }
     return Promise.all(tasks);
 };
+
+const getMaisTokens = (...ids) =>
+    MaisTokenSchema.findAll({
+        where: { id: { [Op.in]: ids } },
+        attributes: [ "id", "token" ]
+    }).then(tokens => tokens.map(({ id, token }) => {
+        return {
+            [id]: token
+        };
+    })).reduce((tokensObj, token) => {
+        return { ...tokensObj, ...token };
+    });
     
 module.exports = {
     User,
@@ -209,6 +221,7 @@ module.exports = {
         updatePZKToken,
         updateMAISToken,
         connect,
-        disconnect
+        disconnect,
+        getMaisTokens
     }
 };

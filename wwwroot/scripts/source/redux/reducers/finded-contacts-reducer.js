@@ -16,6 +16,9 @@ export default (state = new findedContactsModel(), action) => {
             state = state.set("contacts", List(action.contactsIds));
             return state;
         }
+        case REDUX_ACTIONS["CONTACTS-SEARCH.CLEAR"]: {
+            return new findedContactsModel();
+        }
     }
     return state;
 };

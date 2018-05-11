@@ -24,3 +24,24 @@ export const removeContact = contactId => {
 export const clearMessenger = () => {
     store.dispatch(MESSENGER_ACTIONS.CLEAR());
 };
+
+export const getMessagesForContact = contactId => {
+    emit(SOCKET_EVENTS["MESSENGER.GET-MESSAGES"], contactId);
+};
+
+export const getMessagesForContactDone = messages => {
+    messages = messages.map(messageDTO => new Message(messageDTO));
+    store.dispatch(MESSENGER_ACTIONS.SET_MESSAGES(messages));
+};
+
+export const sendMessage = (messageText, messageDate) => {
+    const state = store.getState();
+    const contact = state.contacts
+        .findLast(contact => contact.contactId === state.messenger.get("activeContactId"));
+    emit(SOCKET_EVENTS["MESSENGER.SEND-MESSAGE"], contact, messageText, messageDate);
+};
+
+export const addMessageToContact = message => {
+    message = new Message(message);
+    store.dispatch(MESSENGER_ACTIONS.ADD_MESSAGE_TO_CONTACT(message));
+};

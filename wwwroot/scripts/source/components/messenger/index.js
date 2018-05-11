@@ -5,7 +5,8 @@ import ContactHeader from "./header";
 import MessageEditor from "./editor";
 import MessengerHistory from "./history";
 import {
-    emitGetIntoMessages
+    emitGetIntoMessages,
+    getMessagesForContact
 } from "../../models/messenger";
 import {
     CONTACT_STATUSES_COD,
@@ -14,6 +15,7 @@ import {
 } from "../../../../../constants";
 import Contact from "../../../../../models/contact";
 import Message from "../../../../../models/message";
+import { List } from "immutable";
 
 class Messenger extends Component {
     static propTypes = {
@@ -32,10 +34,21 @@ class Messenger extends Component {
                 emitGetIntoMessages(contact.contactId);
                 break;
             }
+            case CONTACT_STATUSES_COD.ESTABLISHED: {
+                if((this.props.contact && this.props.contact.id === contact.id) 
+                || (options && (!options.id || options.messagesWasLoaded))) 
+                {
+                    return;
+                }
+                getMessagesForContact(contact.contactId);
+                break;
+            }
         }
     }
     get messages() {
-        return this.props.options.messages;
+        return List(this.props.options.messages).groupBy(message => {
+            return message.updatedAt.format("DD.MM.YYYY");
+        });
     }
     get isDone() {
         return this.props.options.messagesWasLoaded;
@@ -79,6 +92,14 @@ class Messenger extends Component {
                                 doType={MESSENGER_DO_TYPES["SEND-CONTAT-REQUEST"]}
                                 systemMessage={`### Здравствуйте, ${contact.item.first_name}.  \n Я хотел бы добавить вас в свой список контактов.  \n`} 
                             />
+                        </>
+                    );
+                    break;
+                case CONTACT_STATUSES_COD.ESTABLISHED:
+                    body = (
+                        <>
+                            <MessengerHistory type={MESSAGE_TYPE.REGULAR} messages={this.messages} />
+                            <MessageEditor />
                         </>
                     );
                     break;

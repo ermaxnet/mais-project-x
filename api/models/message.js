@@ -115,6 +115,12 @@ const getPersonalizedMessages = (userId, contactId, where = {}) =>
         ? messages.map(messageDTO => toMessage(userId, messageDTO))  
         : []);
 
+const getPersonalizedMessage = (userId, messageId) => 
+        MessageSchema.findOne({
+            where: { id: messageId },
+            include: associations
+        }).then(messageDTO => messageDTO ? toMessage(userId, messageDTO) : null);
+
 const updateMessage = (id, message) => {
     checkType(message);
     return MessageSchema.findOne({
@@ -142,6 +148,7 @@ module.exports = {
         add,
         getMessages,
         getPersonalizedMessages,
+        getPersonalizedMessage,
         generateRandomId,
         updateMessage
     }

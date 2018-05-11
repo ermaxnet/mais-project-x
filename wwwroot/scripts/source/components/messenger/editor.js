@@ -6,13 +6,17 @@ import { MESSENGER_DO_TYPES } from "../../../../../constants";
 import {
     sendRequestOnContact
 } from "../../models/contacts";
+import {
+    sendMessage
+} from "../../models/messenger";
+import { svgIcon } from "../../functions";
 
 class MessageEditor extends Component {
     static propTypes = {
         systemMessage: PropTypes.string,
         doType: PropTypes.number
     }
-    static defaultValues = {
+    static defaultProps = {
         doType: MESSENGER_DO_TYPES.NONE
     }
     constructor(props) {
@@ -68,6 +72,14 @@ class MessageEditor extends Component {
             textHTML
         });
     }
+    onSend(e) {
+        e.preventDefault();
+        sendMessage(this.state.text, Date.now());
+        this.setState({
+            text: "",
+            textHTML: ""
+        });
+    }
     escapeMd(value) {
         value = escape(value);
         return unescape(value.replace(/%0A/g, "  %0A"));
@@ -90,22 +102,34 @@ class MessageEditor extends Component {
                     </div>
                 );
                 break;
+            case MESSENGER_DO_TYPES.NONE: {
+                messengerDo = (
+                    <button type="button" className="message-send" onClick={this.onSend.bind(this)}>
+                        <svg className="menu-item__icon icon" dangerouslySetInnerHTML={{ __html: svgIcon("message-send") }}></svg>
+                    </button>
+                );
+            }
         }
         return (
             <div 
-                className="messenger__editor"
+                className={`
+                    messenger__editor
+                    ${this.props.doType === MESSENGER_DO_TYPES.NONE ? " messenger__editor_basic" : ""}
+                `}
                 ref={ref => this.editor = ref}
             >
-                <textarea 
-                    className="messenger__editor-textarea"
-                    name="message" 
-                    id="message" 
-                    value={this.state.text} 
-                    onChange={this.onChange.bind(this)}
-                    placeholder="Введите сообщение..."
-                    ref={ref => this.textarea = ref}
-                ></textarea>
-                {messengerDo}
+                <div className="messenger__active-group">
+                    <textarea 
+                        className="messenger__editor-textarea"
+                        name="message" 
+                        id="message" 
+                        value={this.state.text} 
+                        onChange={this.onChange.bind(this)}
+                        placeholder="Введите сообщение..."
+                        ref={ref => this.textarea = ref}
+                    ></textarea>
+                    {messengerDo}
+                </div>
             </div>
         );
     }
