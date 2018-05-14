@@ -128,7 +128,7 @@ const mapStateToProps = state => {
         isConnected: state.cabinet.get("isConnected"),
         isContactsBook: state.cabinet.get("isContactsBook"),
         isSearchBook: state.cabinet.get("isSearchBook"),
-        contact: state.messenger.get("activeContact").toJS(),
+        contact: state.messenger.get("activeContact"),
         contacts: state.contacts,
         selectedContact: state.messenger.get("activeContactId"),
         messenger: state.messenger,

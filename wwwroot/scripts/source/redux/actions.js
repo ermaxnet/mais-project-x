@@ -100,6 +100,12 @@ export const MESSENGER_ACTIONS = {
             type: REDUX_ACTIONS["MESSENGER.ADD-MESSAGE-TO-CONTACT"],
             message
         };
+    },
+    CHANGE_MESSAGE_GROUP_MARK(name, top) {
+        return {
+            type: REDUX_ACTIONS["MESSENGER.CHANGE-MESSAGE-GROUP-MARK"],
+            name, top
+        };
     }
 };
 

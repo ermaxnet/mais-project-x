@@ -32,6 +32,9 @@ class Message {
     get messageHash() {
         return this.text + this.updatedAt;
     }
+    get hash() {
+        return `${this.updatedAt.format("HH:mm")}|${this.isInbox}|${this.type}`;
+    }
     setSender(senderId, sender) {
         if(sender === null) {
             return this.sender = new User({ id: senderId });

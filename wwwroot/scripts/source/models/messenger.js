@@ -45,3 +45,7 @@ export const addMessageToContact = message => {
     message = new Message(message);
     store.dispatch(MESSENGER_ACTIONS.ADD_MESSAGE_TO_CONTACT(message));
 };
+
+export const changeMessagesGroupMark = (name, top) => {
+    store.dispatch(MESSENGER_ACTIONS.CHANGE_MESSAGE_GROUP_MARK(name, top));
+};

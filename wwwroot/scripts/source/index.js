@@ -10,6 +10,10 @@ import CabinetPage from "./pages/cabinet";
 import registerServiceWorker from "./registerServiceWorker";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import moment from "moment";
+
+// App settings
+moment.locale("ru");
 
 ReactDOM.render(
     <Router>

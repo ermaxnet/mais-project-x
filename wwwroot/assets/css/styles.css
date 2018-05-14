@@ -904,16 +904,32 @@ body {
 }
 
 .messenger__history {
-  display: flex;
-  flex-flow: column;
-  padding: 30px 0;
+  position: relative;
+  padding: 0 0 15px;
   overflow-x: hidden;
   overflow-y: auto;
 }
+.messenger__history-mark {
+  position: absolute;
+  display: block;
+  width: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #79ADDC;
+  font-weight: 700;
+  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 45px;
+  z-index: 1000;
+}
 .messenger__history .messages__group {
   position: relative;
-  padding-top: 30px;
+  padding-top: 45px;
   margin-bottom: 20px;
+  display: flex;
+  flex-flow: column;
 }
 .messenger__history .messages__group:last-of-type {
   margin-bottom: 0;
@@ -930,7 +946,22 @@ body {
   font-weight: 700;
   font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  line-height: 30px;
+  line-height: 45px;
+}
+.messenger__history .messages__group .messages__group-name .messages__group-name-text {
+  position: relative;
+  background-color: #F9F9F9;
+  padding: 0 10px;
+}
+.messenger__history .messages__group .messages__group-name::before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: calc(100% - 60px);
+  height: 1px;
+  background-color: #79ADDC;
+  left: 30px;
+  top: 22px;
 }
 
 .message {
@@ -1060,4 +1091,8 @@ body {
 }
 .message__text i, .message__text em {
   font-style: italic;
+}
+
+.messenger__scrollbars .messages__scroll-track .messages__scroll-thumb {
+  background-color: #D3E2F0;
 }

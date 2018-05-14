@@ -15,11 +15,11 @@ import {
 } from "../../../../../constants";
 import Contact from "../../../../../models/contact";
 import Message from "../../../../../models/message";
-import { List } from "immutable";
+import { Record } from "immutable";
 
 class Messenger extends Component {
     static propTypes = {
-        options: PropTypes.object.isRequired,
+        options: PropTypes.instanceOf(Record).isRequired,
         contact: PropTypes.instanceOf(Contact)
     }
     componentWillReceiveProps({ contact, options }) {
@@ -27,7 +27,7 @@ class Messenger extends Component {
         switch(contact.settings.status) {
             case CONTACT_STATUSES_COD.CREATED: {
                 if((this.props.contact && this.props.contact.id === contact.id) 
-                    || (options && (!options.id || options.messagesWasLoaded))) 
+                    || (options && (!options.get("id") || options.get("messagesWasLoaded")))) 
                 {
                     return;
                 }
@@ -36,7 +36,7 @@ class Messenger extends Component {
             }
             case CONTACT_STATUSES_COD.ESTABLISHED: {
                 if((this.props.contact && this.props.contact.id === contact.id) 
-                || (options && (!options.id || options.messagesWasLoaded))) 
+                || (options && (!options.get("id") || options.get("messagesWasLoaded")))) 
                 {
                     return;
                 }
@@ -46,12 +46,10 @@ class Messenger extends Component {
         }
     }
     get messages() {
-        return List(this.props.options.messages).groupBy(message => {
-            return message.updatedAt.format("DD.MM.YYYY");
-        });
+        return this.props.options.get("messages");
     }
     get isDone() {
-        return this.props.options.messagesWasLoaded;
+        return this.props.options.get("messagesWasLoaded");
     }
     render() {
         const contact = this.props.contact;
@@ -98,7 +96,7 @@ class Messenger extends Component {
                 case CONTACT_STATUSES_COD.ESTABLISHED:
                     body = (
                         <>
-                            <MessengerHistory type={MESSAGE_TYPE.REGULAR} messages={this.messages} />
+                            <MessengerHistory type={MESSAGE_TYPE.REGULAR} messages={this.messages} mark={this.props.options.get("mark")} />
                             <MessageEditor />
                         </>
                     );
