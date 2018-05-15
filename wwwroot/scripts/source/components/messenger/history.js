@@ -25,10 +25,10 @@ class MessengerHistory extends Component {
     }
     onTrackRender({ style, ...props }) {
         return <div {...props} style={{ 
-            ...style, right: 0, bottom: 2, top: 2, width: 8 }} className="messages__scroll-track" />;
+            ...style, right: 0, bottom: 2, top: 2, width: 8 }} className="scroll__track" />;
     }
     onThumbRender(props) {
-        return <div {...props} className="messages__scroll-thumb" />;
+        return <div {...props} className="scroll__track--thumb" />;
     }
     onViewRender({ style, ...props }) {
         const customStyles = this.props.type === MESSAGE_TYPE.SYSTEM || this.props.type === MESSAGE_TYPE.INTRO
@@ -40,7 +40,7 @@ class MessengerHistory extends Component {
             : {
 
             };
-        return <div {...props} style={{ ...style, ...customStyles }} className="messenger__scrollbars-container" />;
+        return <div {...props} style={{ ...style, ...customStyles }} className="scroll__container" />;
     }
     onGroupVisibilityChange(isVisible, groupName) {
         if(this.scroll) {
@@ -138,7 +138,7 @@ class MessengerHistory extends Component {
                             ? (
                                 <mark className="messages__group-name">
                                     <span className="messages__group-name-text">{displayDate(groupName)}</span>
-                                    <Sensor className="messenger__scrollbars" 
+                                    <Sensor className="scroll--messages" 
                                         name={groupName} 
                                         onChange={this.onGroupVisibilityChange.bind(this)}
                                     />
@@ -161,7 +161,7 @@ class MessengerHistory extends Component {
                     )
                     : null
                 }
-                <Scrollbars className="messenger__scrollbars" 
+                <Scrollbars className="scroll scroll--messages" 
                     ref={ref => this.scroll = ref}
                     renderTrackVertical={this.onTrackRender.bind(this)}
                     renderThumbVertical={this.onThumbRender.bind(this)}

@@ -5,7 +5,10 @@ import ContactItem from "./contact";
 import { groupBy } from "../../functions";
 
 const ContactsList = props => {
-    const contacts = groupBy(props.contacts, contact => 
+    let contacts = props.contacts.sort((contact1, contact2) => {
+        return contact1.key.charCodeAt() - contact2.key.charCodeAt();
+    });
+    contacts = groupBy(contacts, contact => 
         contact.key[0]);
     let content = <span className="contacts-list-empty">Ужас, у вас нет ни одного контакта! Это нужно срочно исправить.</span>;
     if(contacts.size) {

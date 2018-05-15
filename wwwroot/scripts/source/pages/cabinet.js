@@ -40,6 +40,9 @@ class CabinetPage extends Component {
             this.listContact();
         });
     }
+    componentDidMount() {
+
+    }
     onExit(e) {
         e.preventDefault();
         Cookie.remove(COOKIE);
@@ -77,7 +80,10 @@ class CabinetPage extends Component {
                 book = (
                     <section className="book book__contacts">
                         <BookHeader text="Мои контакты" />
-                        <ContactsBook contacts={this.contacts} selectedContact={this.props.selectedContact} />
+                        <ContactsBook 
+                            contacts={this.contacts} 
+                            selectedContact={this.props.selectedContact}
+                        />
                     </section>
                 );
             }
@@ -90,7 +96,10 @@ class CabinetPage extends Component {
                 book = (
                     <section className="book book__search">
                         <BookHeader text="Результаты поиска" />
-                        <ContactsBook contacts={this.findedContacts} selectedContact={this.props.selectedContact} />
+                        <ContactsBook 
+                            contacts={this.findedContacts} 
+                            selectedContact={this.props.selectedContact}
+                        />
                     </section>
                 );
             }

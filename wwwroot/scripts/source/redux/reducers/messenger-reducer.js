@@ -2,7 +2,7 @@ import {
     REDUX_ACTIONS,
     CONTACT_STATUSES_COD
 } from "../../../../../constants";
-import { Record, List, Map } from "immutable";
+import { Record, List, Map, OrderedMap } from "immutable";
 import moment from "moment";
 
 const markRecord = Record({
@@ -14,7 +14,7 @@ const markRecord = Record({
 const contactRecord = Record({
     id: 0,
     contactStatus: CONTACT_STATUSES_COD.FINDED,
-    messages: Map(),
+    messages: OrderedMap(),
     messagesWasLoaded: false,
     mark: new markRecord()
 });

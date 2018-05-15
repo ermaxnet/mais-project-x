@@ -660,6 +660,10 @@ body {
   right: 30px;
 }
 
+.contacts-book {
+  padding-bottom: 15px;
+}
+
 .contacts {
   position: relative;
 }
@@ -1095,6 +1099,6 @@ body {
   font-style: italic;
 }
 
-.messenger__scrollbars .messages__scroll-track .messages__scroll-thumb {
+.scroll__track--thumb {
   background-color: #D3E2F0;
 }
