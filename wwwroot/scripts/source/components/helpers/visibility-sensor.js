@@ -31,6 +31,9 @@ class VisibilitySensor extends Component {
         this.onCheck(true);
         this.componentAttach();
     }
+    componentWillUnmount() {
+        this.componentDetach();
+    }
     componentAttach() {
         let timer;
         const done = () => {
@@ -38,7 +41,7 @@ class VisibilitySensor extends Component {
             timer = setTimeout(() => {
                 timer = null;
                 this.onCheck();
-            }, 250);
+            }, 50);
         };
         const event = {
             handler: done
@@ -60,9 +63,9 @@ class VisibilitySensor extends Component {
         if(typeof onChange !== "function") { return; }
         if(this.state.isVisible !== isVisible) {
             this.setState({ isVisible });
-            onChange(isVisible, this.props.name, setup);
+            onChange(isVisible, this.props.name);
         } else if(setup) {
-            onChange(this.state.isVisible, this.props.name, setup);
+            onChange(this.state.isVisible, this.props.name);
         }
     }
     render() {

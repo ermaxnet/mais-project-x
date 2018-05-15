@@ -15,7 +15,7 @@ import {
 } from "../../../../../constants";
 import Contact from "../../../../../models/contact";
 import Message from "../../../../../models/message";
-import { Record } from "immutable";
+import { Record, OrderedMap } from "immutable";
 
 class Messenger extends Component {
     static propTypes = {
@@ -85,7 +85,9 @@ class Messenger extends Component {
                     });
                     body = (
                         <>
-                            <MessengerHistory type={MESSAGE_TYPE.SYSTEM} messages={[ message ]} />
+                            <MessengerHistory type={MESSAGE_TYPE.SYSTEM} 
+                                messages={OrderedMap({ [message.updatedAt.format("DD.MM.YYYY")]: message })} 
+                            />
                             <MessageEditor 
                                 doType={MESSENGER_DO_TYPES["SEND-CONTAT-REQUEST"]}
                                 systemMessage={`### Здравствуйте, ${contact.item.first_name}.  \n Я хотел бы добавить вас в свой список контактов.  \n`} 

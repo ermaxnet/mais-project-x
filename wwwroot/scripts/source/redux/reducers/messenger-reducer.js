@@ -127,49 +127,8 @@ export default (state = new messengerState(), action) => {
             return state;
         }
         case REDUX_ACTIONS["MESSENGER.CHANGE-MESSAGE-GROUP-MARK"]: {
-           /*  const top = state.getIn([ "activeContact", "mark", "top" ]),
-                oldName = state.getIn([ "activeContact", "mark", "name" ]);
-            const list = state.getIn([ "activeContact", "messages" ]).keySeq(),
-                size = list.size,
-                index = list.keyOf(action.mark);
-            let name = null;
-            let setup = state.getIn([ "activeContact", "mark", "setup" ]);
-            const moveOn = top > action.top;
-            switch(true) {
-                case size === 1: {
-                    name = action.isVisible ? null : action.mark;
-                    setup = true;
-                    break;
-                }
-                case size > 1: {
-                    if(setup) {
-                        if(moveOn) {
-                            if(action.isVisible && index === 0) {
-                                name = null;
-                            } else {
-                                name = list.get(index - 1) || null;
-                            }
-                        } else {
-                            if(action.isVisible) {
-                                name = list.get(index - 1) || null;
-                            } else {
-                                name = list.get(index);
-                            }
-                        }
-                    } else {
-                        name = action.isVisible ? list.get(size - 2) : list.get(size - 1);
-                        setup = true;
-                    }
-                    break;
-                }
-                case size <= 1: 
-                    return state;
-            }
-           */
-            return state.updateIn([ "activeContact", "mark" ], mark => {
-                mark = mark.set("top", action.top).set("name", action.name).set("setup", true);
-                return mark;
-            }); 
+            return state.updateIn([ "activeContact", "mark" ], mark => 
+                mark.set("top", action.top).set("name", action.name).set("setup", true)); 
         }
     }
     return state;

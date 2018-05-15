@@ -5,7 +5,7 @@ import MessageIntro from "../message/message-intro";
 import { MESSAGE_TYPE } from "../../../../../constants";
 import { Scrollbars } from "react-custom-scrollbars";
 import Sensor from "../helpers/visibility-sensor";
-import { OrderedMap, Record } from "immutable";
+import { OrderedMap, Record, List } from "immutable";
 import { displayDate } from "../../functions";
 import {
     changeMessagesGroupMark
@@ -30,39 +30,55 @@ class MessengerHistory extends Component {
     onThumbRender(props) {
         return <div {...props} className="messages__scroll-thumb" />;
     }
-    onGroupVisibilityChange(isVisible, groupName, setup = false) {
-/*         if(setup && this.props.mark.get("needSetup")) {
-            
-        } */
+    onViewRender({ style, ...props }) {
+        const customStyles = this.props.type === MESSAGE_TYPE.SYSTEM || this.props.type === MESSAGE_TYPE.INTRO
+            ? {
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end"
+            }
+            : {
+
+            };
+        return <div {...props} style={{ ...style, ...customStyles }} className="messenger__scrollbars-container" />;
+    }
+    onGroupVisibilityChange(isVisible, groupName) {
         if(this.scroll) {
             const currentMark = this.props.mark;
-            //console.log(isVisible, groupName, setup);
-            //changeMessagesGroupMark(, isVisible, groupName);
-            if(!currentMark.get("setup")) {
-                return this.checkGroupName(this.groupNames.get(this.groupNames.size - 1));
-            }
+            const setup = currentMark.get("setup");
             const top = currentMark.get("top"),
                 oldName = currentMark.get("name"),
                 scrollOn = this.scroll.getValues().top;
             const size = this.groupNames.size,
                 index = this.groupNames.keyOf(groupName);
             let name = null;
-            if(size > 0) {
-                const moveOn = top > scrollOn;
-                if(moveOn) {
-                    if(isVisible && index === 0) {
-                        name = null;
-                    } else {
-                        name = this.groupNames.get(index - 1) || null;
-                    }
-                } else {
-                    if(isVisible) {
-                        name = this.groupNames.get(index - 1) || null;
-                    } else {
-                        name = this.groupNames.get(index);
-                    }
+            const moveOn = top > scrollOn;
+            switch(true) {
+                case size === 1 && !setup: {
+                    name = isVisible ? null : groupName;
+                    break;
                 }
-            }
+                case size > 1: {
+                    if(setup) {
+                        if(moveOn) {
+                            if(isVisible && index === 0) {
+                                name = null;
+                            } else {
+                                name = this.groupNames.get(index - 1) || null;
+                            }
+                        } else {
+                            if(isVisible) {
+                                name = this.groupNames.get(index - 1) || null;
+                            } else {
+                                name = this.groupNames.get(index);
+                            }
+                        }
+                    } else {
+                        name = isVisible ? this.groupNames.get(size - 2) : this.groupNames.get(size - 1);
+                    }
+                    break;
+                }
+            };
             if(oldName !== name) {
                 this.checkGroupName(name, scrollOn);
             }
@@ -84,8 +100,7 @@ class MessengerHistory extends Component {
                         items = <MessageIntro message={messagesList.get(0)} />
                         break;
                     }
-                    case MESSAGE_TYPE.REGULAR:
-                    case MESSAGE_TYPE.SYSTEM: {
+                    case MESSAGE_TYPE.REGULAR: {
                         items = messagesList.map((timesMessagesList, options, index) => {
                             const [
                                 time,
@@ -105,16 +120,32 @@ class MessengerHistory extends Component {
                         }).toList();
                         break;
                     }
+                    case MESSAGE_TYPE.SYSTEM: {
+                        items = <MessagesByTime 
+                            key={groupName + "system"} 
+                            messages={List([ messagesList ])} 
+                            date={groupName}
+                            time={messagesList.updatedAt.format("HH:mm")} 
+                            isInbox={messagesList.isInbox}
+                            type={messagesList.type}
+                        />;
+                        break;
+                    }
                 }
                 return (
                     <div className="messages__group" key={index + groupName} data-group-name={groupName}>
-                        <mark className="messages__group-name">
-                            <span className="messages__group-name-text">{displayDate(groupName)}</span>
-                            <Sensor className="messenger__scrollbars" 
-                                name={groupName} 
-                                onChange={this.onGroupVisibilityChange.bind(this)}
-                            />
-                        </mark>
+                        {this.props.type !== MESSAGE_TYPE.SYSTEM
+                            ? (
+                                <mark className="messages__group-name">
+                                    <span className="messages__group-name-text">{displayDate(groupName)}</span>
+                                    <Sensor className="messenger__scrollbars" 
+                                        name={groupName} 
+                                        onChange={this.onGroupVisibilityChange.bind(this)}
+                                    />
+                                </mark>
+                            )
+                            : null
+                        }
                         {items}
                     </div>
                 );
@@ -122,13 +153,19 @@ class MessengerHistory extends Component {
         }
         return (
             <div className="messenger__history">
-                <div className="messenger__history-mark">
-                    <span>{displayDate(this.props.mark.get("name"))}</span>
-                </div>
+                {this.props.mark && this.props.mark.get("name")
+                    ? (
+                        <div className="messenger__history-mark">
+                            <span>{displayDate(this.props.mark.get("name"))}</span>
+                        </div>
+                    )
+                    : null
+                }
                 <Scrollbars className="messenger__scrollbars" 
                     ref={ref => this.scroll = ref}
                     renderTrackVertical={this.onTrackRender.bind(this)}
                     renderThumbVertical={this.onThumbRender.bind(this)}
+                    renderView={this.onViewRender.bind(this)}
                 >
                     {list}
                 </Scrollbars>

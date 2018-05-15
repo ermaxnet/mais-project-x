@@ -926,6 +926,8 @@ body {
 }
 .messenger__history .messages__group {
   position: relative;
+  width: 100%;
+  height: auto;
   padding-top: 45px;
   margin-bottom: 20px;
   display: flex;
