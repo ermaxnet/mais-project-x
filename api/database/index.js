@@ -6,7 +6,8 @@ const sequelize = require("./sequelize"),
        PzkToken = require("./schemas/pzk-tokens-schema")(sequelize, DataTypes),
         Contact = require("./schemas/contact-schema")(sequelize, DataTypes),
        Relation = require("./schemas/relation-schema")(sequelize, DataTypes),
-        Message = require("./schemas/message-schema")(sequelize, DataTypes);
+        Message = require("./schemas/message-schema")(sequelize, DataTypes),
+     Attachment = require("./schemas/attachment-schema")(sequelize, DataTypes);
 
 User.hasOne(Settings, { foreignKey: "id", as: "settings" });
 User.hasOne(MaisToken, { foreignKey: "id", as: "maisToken" });
@@ -19,6 +20,7 @@ Relation.belongsTo(User, { foreignKey: "userId", targetKey: "id", as: "contact" 
 Contact.hasMany(Message, { onDelete: "CASCADE" });
 Message.belongsTo(Contact, { foreignKey: "contactId", targetKey: "id", as: "contact" });
 Message.belongsTo(User, { foreignKey: "senderId", targetKey: "id", as: "sender" });
+Message.hasMany(Attachment, { foreignKey: "message_id", targetKey: "id", as: "attachments", onDelete: "CASCADE" });
 
 module.exports = {
     sequelize,
@@ -28,5 +30,6 @@ module.exports = {
     PzkTokenSchema: PzkToken,
     ContactSchema: Contact,
     RelationSchema: Relation,
-    MessageSchema: Message
+    MessageSchema: Message,
+    AttachmentSchema: Attachment 
 };

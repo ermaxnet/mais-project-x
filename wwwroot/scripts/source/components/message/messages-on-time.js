@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Converter } from "showdown";
 import { MESSAGE_TYPE } from "../../../../../constants";
 import { List } from "immutable";
+import AttachmentBox from "./attachment";
 
 const MessagesByTime = props => {
     const showdown = new Converter({
@@ -11,7 +12,21 @@ const MessagesByTime = props => {
     });
     const texts = props.messages.map(message => {
         const textHTML = showdown.makeHtml(message.text.trim()); 
-        return <section key={message.id} data-id={message.id} dangerouslySetInnerHTML={{ __html: textHTML }}></section>;
+        let attachments = null;
+        if(message.attachments) {
+            attachments = message.attachments.map(attachment => <AttachmentBox key={attachment.id} attachment={attachment} />);
+        }
+        return (
+            <div key={message.id}>
+                <section data-id={message.id} dangerouslySetInnerHTML={{ __html: textHTML }}></section>
+                {attachments
+                    ? (
+                        <div className="message__attachments">{attachments}</div>
+                    )
+                    : null
+                }
+            </div>
+        );
     });
     return (
         <article className={`message

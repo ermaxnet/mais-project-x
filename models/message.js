@@ -1,5 +1,6 @@
 const moment = require("moment");
 const User = require("./user");
+const Attachment = require("./attachment");
 
 class Message {
     constructor({ 
@@ -13,7 +14,8 @@ class Message {
         sender = null,
         senderId = null,
         receiverId = null,
-        isInbox = false 
+        isInbox = false,
+        attachments = null
     }) {
         this.id = id;
         this.type = type;
@@ -25,6 +27,9 @@ class Message {
         this.contactId = contactId;
         this.receiverId = receiverId;
         this.setSender(senderId, sender);
+        if(attachments) {
+            this.attachments = attachments.map(attachment => new Attachment(attachment));
+        }
     }
     get senderId() {
         return this.sender ? this.sender.id : null;

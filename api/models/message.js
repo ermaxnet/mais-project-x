@@ -1,6 +1,7 @@
 const {
     MessageSchema,
-    UserSchema
+    UserSchema,
+    AttachmentSchema
 } = require("../database");
 const Message = require("../../models/message");
 const {
@@ -46,6 +47,11 @@ const associations = [
         include: [
             UserAssociations[1]
         ]
+    },
+    {
+        model: AttachmentSchema,
+        as: "attachments",
+        attributes: [ "id", "type", "link", "has_content", "message_id" ]
     }
 ];
 
@@ -121,6 +127,12 @@ const getPersonalizedMessage = (userId, messageId) =>
             include: associations
         }).then(messageDTO => messageDTO ? toMessage(userId, messageDTO) : null);
 
+const getMessageById = messageId => 
+        MessageSchema.findOne({
+            where: { id: messageId },
+            include: associations
+        }).then(messageDTO => messageDTO ? new Message(messageDTO) : null);
+
 const updateMessage = (id, message) => {
     checkType(message);
     return MessageSchema.findOne({
@@ -150,6 +162,7 @@ module.exports = {
         getPersonalizedMessages,
         getPersonalizedMessage,
         generateRandomId,
-        updateMessage
+        updateMessage,
+        getMessageById
     }
 };

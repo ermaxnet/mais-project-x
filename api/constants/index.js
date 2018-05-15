@@ -5,7 +5,8 @@ const SCHEMAS = {
     MAIS_TOKENS: "mais_tokens",
     CONTACTS: "contacts",
     RELATIONS: "relations",
-    MESSAGES: "messages"
+    MESSAGES: "messages",
+    ATTACHMENTS: "attachments"
 };
 
 module.exports = {

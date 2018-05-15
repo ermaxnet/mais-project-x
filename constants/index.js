@@ -119,6 +119,18 @@ const BROWSER_CUSTOM_EVENTS = {
     ["MOVE-MESSAGES-SCROLL-TO-BOTTOM"]: "MOVE-MESSAGES-SCROLL-TO-BOTTOM"
 };
 
+const ATTACHMENT_TYPES = {
+    ["IMAGE"]: 1
+};
+
+const MIME_TYPES = {
+    ["text/plain"]: "text/plain",
+    ["image/gif"]: "image/gif",
+    ["image/jpeg"]: "image/jpeg",
+    ["image/png"]: "image/png",
+    ["image/svg+xml"]: "image/svg+xml"
+}
+
 module.exports = {
     STATUSES,
     STATUSES_COD,
@@ -135,5 +147,7 @@ module.exports = {
     CONTACT_STATUSES_COD,
     MESSAGE_TYPE,
     MESSENGER_DO_TYPES,
-    BROWSER_CUSTOM_EVENTS
+    BROWSER_CUSTOM_EVENTS,
+    ATTACHMENT_TYPES,
+    MIME_TYPES
 };
