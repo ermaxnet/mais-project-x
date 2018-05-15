@@ -11,6 +11,7 @@ import registerServiceWorker from "./registerServiceWorker";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import moment from "moment";
+import "./polyfills";
 
 // App settings
 moment.locale("ru");

@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import MessagesByTime from "../message/messages-on-time";
 import MessageIntro from "../message/message-intro";
-import { MESSAGE_TYPE } from "../../../../../constants";
+import { 
+    MESSAGE_TYPE,
+    BROWSER_CUSTOM_EVENTS
+} from "../../../../../constants";
 import { Scrollbars } from "react-custom-scrollbars";
 import Sensor from "../helpers/visibility-sensor";
 import { OrderedMap, Record, List } from "immutable";
@@ -22,6 +25,9 @@ class MessengerHistory extends Component {
     }
     componentDidMount() {
         this.scroll.scrollToBottom();
+        document.body.addEventListener(BROWSER_CUSTOM_EVENTS["MOVE-MESSAGES-SCROLL-TO-BOTTOM"], () => {
+            this.scroll.scrollToBottom();
+        });
     }
     onTrackRender({ style, ...props }) {
         return <div {...props} style={{ 

@@ -12,7 +12,8 @@ import {
 import { emit } from "../socket";
 import { 
     SOCKET_EVENTS,
-    CONTACT_STATUSES_COD
+    CONTACT_STATUSES_COD,
+    STATUSES_COD
 } from "../../../../constants";
 import {
     showContactsBook
@@ -125,4 +126,12 @@ export const pushContactToContactsBook = (contact, isSelect = false) => {
         contact: contact.item
     });
     store.dispatch(CONTACTS_ACTIONS.PUSH_CONTACT(contact));
+};
+
+export const setOnlineStatus = userId => {
+    store.dispatch(CONTACTS_ACTIONS.CHANGE_USER_STATUS(userId, STATUSES_COD.connected));
+};
+
+export const setOfflineStatus = userId => {
+    store.dispatch(CONTACTS_ACTIONS.CHANGE_USER_STATUS(userId, STATUSES_COD.disconnected));
 };

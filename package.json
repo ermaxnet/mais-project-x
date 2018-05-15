@@ -14,7 +14,6 @@
     "url": "git+https://github.com/ermaxnet/mais-project-x.git"
   },
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.46",
     "autosize": "^4.0.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
@@ -46,6 +45,7 @@
     "socket.io-redis": "^5.2.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.46",
     "@babel/core": "^7.0.0-beta.46",
     "@babel/preset-env": "^7.0.0-beta.46",
     "@babel/preset-react": "^7.0.0-beta.46",

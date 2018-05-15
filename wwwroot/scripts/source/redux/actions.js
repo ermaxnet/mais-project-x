@@ -55,6 +55,13 @@ export const CONTACTS_ACTIONS = {
             type: REDUX_ACTIONS["CONTACTS.PUSH-CONTACT"],
             contact
         };
+    },
+    CHANGE_USER_STATUS(userId, statusCod) {
+        return {
+            type: REDUX_ACTIONS["CONTACTS.CHANGE-USER-STATUS"],
+            userId,
+            statusCod
+        };
     }
 };
 

@@ -31,6 +31,15 @@ export default (state = List(), action) => {
             state = state.push(action.contact);
             return state;
         }
+        case REDUX_ACTIONS["CONTACTS.CHANGE-USER-STATUS"]: {
+            state = state.map(contact => {
+                if(contact.userId === action.userId) {
+                    contact.item.status = action.statusCod;
+                }
+                return contact;
+            });
+            return state;
+        }
     }
     return state;
 };

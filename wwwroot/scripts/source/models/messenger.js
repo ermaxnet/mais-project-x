@@ -1,7 +1,10 @@
 import { MESSENGER_ACTIONS } from "../redux/actions";
 import store from "../redux/store";
 import { emit } from "../socket";
-import { SOCKET_EVENTS } from "../../../../constants";
+import { 
+    SOCKET_EVENTS,
+    BROWSER_CUSTOM_EVENTS
+} from "../../../../constants";
 import Message from "../../../../models/message";
 
 export const selectContact = (contactId, contactStatus) => {
@@ -44,6 +47,10 @@ export const sendMessage = (messageText, messageDate) => {
 export const addMessageToContact = message => {
     message = new Message(message);
     store.dispatch(MESSENGER_ACTIONS.ADD_MESSAGE_TO_CONTACT(message));
+    if(!message.isInbox) {
+        const moveOnBottomEvent = new CustomEvent(BROWSER_CUSTOM_EVENTS["MOVE-MESSAGES-SCROLL-TO-BOTTOM"]);
+        document.body.dispatchEvent(moveOnBottomEvent);
+    }
 };
 
 export const changeMessagesGroupMark = (name, top) => {

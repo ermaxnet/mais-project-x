@@ -13,7 +13,9 @@ import {
     rejectRequestOnContactDone,
     findContactsDone,
     sendRequestOnContactDone,
-    pushContactToContactsBook
+    pushContactToContactsBook,
+    setOnlineStatus,
+    setOfflineStatus
 } from "./models/contacts";
 import {
     setIntroMessages,
@@ -36,6 +38,12 @@ export const connect = done => {
         socket.on(SOCKET_EVENTS["CABINET.USER-CONNECTED"], (user, contacts) => {
             setContactsList(contacts);
             addUser(user);
+        });
+        socket.on(SOCKET_EVENTS["CABINET.USER-ONLINE"], userId => {
+            setOnlineStatus(userId);
+        });
+        socket.on(SOCKET_EVENTS["CABINET.USER-OFFLINE"], userId => {
+            setOfflineStatus(userId);
         });
         socket.on(SOCKET_EVENTS["MESSENGER.SET-INTRO-MESSAGES"], messages => {
             setIntroMessages(messages);

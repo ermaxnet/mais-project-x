@@ -32,6 +32,7 @@ const connect = io => {
                 socket.request.user.maisToken = token;
 
                 socket.emit(SOCKET_EVENTS["CABINET.USER-CONNECTED"], socket.request.user, contacts);
+                socket.broadcast.emit(SOCKET_EVENTS["CABINET.USER-ONLINE"], socket.request.user.id);
 
                 socket.on(SOCKET_EVENTS["MESSENGER.GET-INTRO-MESSAGES"], contactId => {
                     MessageAPI.getPersonalizedMessages(socket.request.user.id, contactId, { type: MESSAGE_TYPE.INTRO })
@@ -160,7 +161,7 @@ const connect = io => {
                 socket.on("disconnecting", () => {
                     UserAPI.disconnect(socket.request.user.id, true)
                         .then(() => {
-                            // more here...
+                            socket.broadcast.emit(SOCKET_EVENTS["CABINET.USER-OFFLINE"], socket.request.user.id);
                         });
                 });
             });

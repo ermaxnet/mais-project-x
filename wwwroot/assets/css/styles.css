@@ -1098,6 +1098,18 @@ body {
 .message__text i, .message__text em {
   font-style: italic;
 }
+.message__text ol {
+  padding-left: 20px;
+}
+.message__text ol li {
+  list-style-type: decimal;
+}
+.message__text ul {
+  padding-left: 20px;
+}
+.message__text ul li {
+  list-style-type: disc;
+}
 
 .scroll__track--thumb {
   background-color: #D3E2F0;

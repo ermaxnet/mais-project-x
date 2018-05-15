@@ -296,4 +296,18 @@
     i, em {
         font-style: italic;
     }
+    ol {
+        padding-left: 20px;
+
+        li {
+            list-style-type: decimal;
+        }
+    }
+    ul {
+        padding-left: 20px;
+        
+        li {
+            list-style-type: disc;
+        }
+    }
 }
